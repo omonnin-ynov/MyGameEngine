@@ -5,7 +5,7 @@ unsigned int MGE::AComponent::createID()
     return 0;
 }
 
-MGE::AComponent::AComponent()
+MGE::AComponent::AComponent(std::string name)
 {
     _ID = createID();
 }

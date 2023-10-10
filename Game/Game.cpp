@@ -5,8 +5,8 @@
 
 int main()
 {
-    MGE::Application::Application();
-    sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
+    MGE::Application app = MGE::Application::Application();
+    app.initalizeWindow(800, 800);
     
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
@@ -31,7 +31,6 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             shape.setPosition(shape.getPosition() + sf::Vector2f(-0.5f, 0.0f));
         }
-
         window.clear();
         window.draw(shape);
         window.display();

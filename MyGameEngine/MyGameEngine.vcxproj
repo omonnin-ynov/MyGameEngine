@@ -155,11 +155,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AComponent.h" />
+    <ClInclude Include="AEntity.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AComponent.cpp" />
+    <ClCompile Include="AEntity.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="MyGameEngine.cpp" />
     <ClCompile Include="pch.cpp">

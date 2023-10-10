@@ -8,15 +8,23 @@ namespace MGE {
 	protected:
 		unsigned int _ID;
 		std::string _name;
-		std::list<AComponent> components;
+		std::list<AComponent> _components;
 
 	public:
 		AEntity(std::string name);
-		virtual void Awake() = 0;
-		virtual void Start() = 0;
-		virtual void Update() = 0;
-		virtual void LateUpdate() = 0;
+
+		void Awake();
+		void Start();
+		void Update();
+		void LateUpdate();
+
+		const std::list<AComponent> getComponents();
+		void attachComponent(AComponent component);
+
 		unsigned int getID();
+
+		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 		std::string E();
 	};
 }
