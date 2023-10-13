@@ -10,7 +10,7 @@ namespace MGE {
 		float _offsetX;
 		float _offsetY;
 	public:
-		void draw(sf::RenderTarget& target) const;
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 		CircleComponent(std::string name);
 		virtual void Update(float deltaTime) override;
 	};

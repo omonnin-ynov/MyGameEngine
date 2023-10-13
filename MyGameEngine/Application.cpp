@@ -4,6 +4,8 @@
 #include "Application.h"
 #include "CameraComponent.h"
 
+MGE::Application* MGE::Application::_instance = nullptr;
+
 /// <summary>
 /// Create Application with IDCounter = 0 and empty list of entities
 /// WARNING: window is nullptr before InitalizeWindow
@@ -13,7 +15,7 @@ MGE::Application::Application()
 	_IDCounter = 0;
 	_entities = std::map<unsigned int, AEntity*>();
 	_components = std::map<unsigned int, AComponent*>();
-	_entityToCompLink = std::map<unsigned int, unsigned int>();
+	_compToEntityLink = std::map<unsigned int, unsigned int>();
 	_window = nullptr;
 	_shouldExit = false;
 }
@@ -66,7 +68,6 @@ void MGE::Application::update(float deltaTime)
 	}
 
 	_window->clear();
-	//TODO needs cleanup but I suck at maps
 	for (auto& [key, value] : _entities) {
 		if (_entities.find(key) != _entities.end()) {
 			_window->draw(*_entities[key]);
@@ -153,4 +154,20 @@ MGE::AComponent* MGE::Application::getComponentFromID(unsigned int ID)
 		return _components[ID];
 	}
 	return nullptr;
+}
+
+/// <summary>
+/// Finds the component's parent. Returns nullptr if no parent component.
+/// </summary>
+/// <param name="comp">The component whose parent will be retrieved.</param>
+/// <returns>The parent component. Nullptr if nonexistent.</returns>
+MGE::AEntity* MGE::Application::getParentComponent(AComponent* comp)
+{
+	try {
+		_compToEntityLink.at(comp->getID());
+	}
+	catch (std::out_of_range) {
+		return nullptr;
+	}
+	return _entities[comp->getID()];
 }

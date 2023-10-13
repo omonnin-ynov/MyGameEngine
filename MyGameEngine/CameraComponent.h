@@ -10,9 +10,10 @@ namespace MGE {
 		bool _rotationFollowsParent;
 
 	public:
+		CameraComponent(std::string name);
 		CameraComponent(std::string name, float x, float y, float halfSizeX, float halfSizeY, bool rotationFollowsParent);
 
-		void Update(float deltaTime) override;
+		void LateUpdate(float deltaTime) override;
 
 		sf::View* getView();
 
