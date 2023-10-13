@@ -1,5 +1,5 @@
 #pragma once
-#include <list>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include "AComponent.h"
 
@@ -8,22 +8,24 @@ namespace MGE {
 	protected:
 		unsigned int _ID;
 		std::string _name;
-		std::list<AComponent> _components;
+		std::vector<AComponent*> _components;
 
 	public:
+		AEntity();
 		AEntity(std::string name);
+		AEntity(std::string name, float x, float y);
 
-		void Awake();
-		void Start();
-		void Update();
-		void LateUpdate();
+		virtual void Awake();
+		virtual void Start();
+		virtual void Update(float deltaTime);
+		virtual void LateUpdate(float deltaTime);
 
-		const std::list<AComponent> getComponents();
-		void attachComponent(AComponent component);
+		const std::vector<AComponent*> getComponents();
+		void attachComponent(AComponent* component);
 
 		unsigned int getID();
 
-		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 		std::string E();
 	};

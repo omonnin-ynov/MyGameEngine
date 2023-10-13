@@ -1,39 +1,72 @@
 #pragma once
-#include "AEntity.h"
+#include <map>
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include "AEntity.h"
 
 namespace MGE {
 	class Application {
-	private:
+	protected:
+		
 		unsigned int _IDCounter;
-		std::list<AEntity> _entities;
+		static Application* _instance;
+
+		std::map<unsigned int, AEntity*> _entities;
+		std::map<unsigned int, AComponent*> _components;
+		std::map<unsigned int, unsigned int> _entityToCompLink;
+
 		sf::RenderWindow* _window;
+		bool _shouldExit;
+		AEntity* _activeCameraEntity;
+		Application();
 
 	public:
-		Application();
+
+		static Application* getInstance();
 
 		void start();
 
-		void exit();
-
 		void initalizeWindow(int x, int y);
 
-		void update();
+		void update(float deltaTime);
 
-		void draw();
+		void handleInput();
 
-		MGE::AEntity createEntity(std::string name);
+		unsigned int GenerateID();
 
-		MGE::AComponent createComponent();
+		const sf::RenderWindow* getWindow();
 
-		MGE::AComponent createComponentAndAttach(MGE::AEntity entity);
+		const sf::View* getActiveCamera();
 
-		const sf::RenderWindow* getWindow() {
-			if (_window->isOpen()) {
-				return _window;
-			}
-			std::cerr << "warning: getWindow was called with no active window";
-			return nullptr;
+		void setActiveCamera(AEntity* cameraEntity);
+
+		AEntity* getEntityFromID(unsigned int ID);
+
+		AComponent* getComponentFromID(unsigned int ID);
+
+		template <std::derived_from<AEntity> T>
+		T* createEntity(std::string name)
+		{
+			T* newEntity = new T(name);
+			_entities.insert(newEntity->getID(), newEntity);
+			return newEntity;
+		}
+
+		template <std::derived_from<AComponent> T>
+		T* createComponent(std::string name)
+		{
+			newComp = new T(name);
+			_components.insert(newComp->getID(), newComp);
+			return newComp;
+		}
+
+		template <std::derived_from<AComponent> T>
+		T* createComponentAndAttach(std::string name, MGE::AEntity* entity)
+		{
+			T* newComp = new T(name);
+			_components.insert(newComp->getID(), newComp);
+			entity->attachComponent(newComp);
+			return newComp;
 		}
 	};
 }

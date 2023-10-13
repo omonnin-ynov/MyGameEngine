@@ -1,40 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include <MyGameEngine/Application.h>
+#include <MyGameEngine/AEntity.h>
+#include <MyGameEngine/CircleComponent.h>
 #include "Game.h"
-
 
 int main()
 {
-    MGE::Application app = MGE::Application::Application();
-    app.initalizeWindow(800, 800);
-    
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    while (window.isOpen())
-    {
-        sf::Event inputEvent;
-        while (window.pollEvent(inputEvent)) {
-            if (inputEvent.type == sf::Event::Closed()) {
-                window.close();
-            }
-        }
+    MGE::Application* app = MGE::Application::getInstance();
+    app->initalizeWindow(800, 800);
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            shape.setPosition(shape.getPosition() + sf::Vector2f(0.0f, 0.5f));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            shape.setPosition(shape.getPosition() + sf::Vector2f(0.0f, -0.5f));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            shape.setPosition(shape.getPosition() + sf::Vector2f(0.5f, 0.0f));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            shape.setPosition(shape.getPosition() + sf::Vector2f(-0.5f, 0.0f));
-        }
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+    //auto circle1 = app.createEntity<MGE::AEntity>("circle1");
+    //auto circleComp1 = app.createComponentAndAttach<MGE::CircleComponent>("circleComp1", circle1);
+
+    //auto circle2 = app.createEntity<MGE::AEntity>("circle2");
+    //auto circleComp2 = app.createComponentAndAttach<MGE::CircleComponent>("circleComp2", circle2);
+
+    app->start();
 
     return 0;
 }
