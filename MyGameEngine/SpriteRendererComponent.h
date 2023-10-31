@@ -21,7 +21,7 @@ namespace MGE {
 
         const sf::Texture& getTexture();
         void setTexture(sf::Texture texture);
-        void loadAndSetTexture(std::string name);
+        void loadAndSetTexture(std::string path);
     };
 
 }

@@ -16,14 +16,8 @@ int main()
     auto circle1 = app->createEntity<MGE::AEntity>("circle1");
     auto SpriteComp1 = app->createComponentAndAttach<MGE::SpriteRendererComponent>("spriteRenderer1", circle1);
 
-    sf::Texture awesomeTexture;
-    if (!awesomeTexture.loadFromFile("C:\\Users\\doomb\\source\\repos\\MyGameEngine\\Game\\res\\awesomeface.png"))
-    {
-        std::cerr << "Could not load texture" << std::endl;
-    }
-
-    SpriteComp1->setTexture(awesomeTexture);
-    awesomeTexture.~Texture();
+    std::string awesomeTexturePath = resManager->getPathFromName("awesomeFace");
+    SpriteComp1->loadAndSetTexture(awesomeTexturePath);
 
     auto circle2 = app->createEntity<MGE::AEntity>("circle2");
     auto circleComp2 = app->createComponentAndAttach<MGE::CircleComponent>("circleComp2", circle2);

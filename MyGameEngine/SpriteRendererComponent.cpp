@@ -1,5 +1,6 @@
 #include "SpriteRendererComponent.h"
 #include "ResourceManager.h"
+#include <iostream>
 
 using namespace MGE;
 
@@ -38,10 +39,14 @@ void SpriteRendererComponent::setTexture(sf::Texture texture)
     _sprite.setTexture(_texture, true);
 }
 
-void MGE::SpriteRendererComponent::loadAndSetTexture(std::string name)
+void MGE::SpriteRendererComponent::loadAndSetTexture(std::string path)
 {
-    std::string textPath = ResourceManager::getInstance()->getPathFromName(name);
-    if (!textPath.empty()) {
-        
+    sf::Texture newTexture;
+    if (!newTexture.loadFromFile(path))
+    {
+        std::cerr << "Could not load texture" << std::endl;
+    }
+    else {
+        setTexture(newTexture);
     }
 }
