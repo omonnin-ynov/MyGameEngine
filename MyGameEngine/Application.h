@@ -3,73 +3,74 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "AEntity.h"
+#include "CameraComponent.h"
 
 namespace MGE {
-	class Application {
-	protected:
-		
-		unsigned int _IDCounter;
-		static Application* _instance;
+    class Application {
+    protected:
+        
+        uint64_t _IDCounter;
+        static Application* _instance;
 
-		std::map<unsigned int, AEntity*> _entities;
-		std::map<unsigned int, AComponent*> _components;
-		std::map<unsigned int, unsigned int> _compToEntityLink;
+        std::map<uint64_t, AEntity*> _entities;
+        std::map<uint64_t, AComponent*> _components;
+        std::map<uint64_t, uint64_t> _compToEntityLink;
 
-		sf::RenderWindow* _window;
-		bool _shouldExit;
-		AEntity* _activeCameraEntity;
-		Application();
+        sf::RenderWindow* _window;
+        bool _shouldExit;
+        CameraComponent* _activeCameraComponent;
+        Application();
 
-	public:
+    public:
 
-		static Application* getInstance();
+        static Application* getInstance();
 
-		void start();
+        void start();
 
-		void initalizeWindow(int x, int y);
+        void initalizeWindow(int x, int y);
 
-		void update(float deltaTime);
+        void update(float deltaTime);
 
-		void handleInput();
+        void handleInput();
 
-		unsigned int GenerateID();
+        uint64_t GenerateID();
 
-		const sf::RenderWindow* getWindow();
+        sf::RenderWindow* getWindow();
 
-		const sf::View* getActiveCamera();
+        sf::View* getActiveCamera();
 
-		void setActiveCamera(AEntity* cameraEntity);
+        void setActiveCamera(AEntity* cameraEntity);
 
-		AEntity* getEntityFromID(unsigned int ID);
+        AEntity* getEntityFromID(uint64_t ID);
 
-		AComponent* getComponentFromID(unsigned int ID);
+        AComponent* getComponentFromID(uint64_t ID);
 
-		AEntity* getParentComponent(AComponent* comp);
+        AEntity* getParentComponent(AComponent* comp);
 
-		template <std::derived_from<AEntity> T>
-		T* createEntity(std::string name)
-		{
-			T* newEntity = new T(name);
-			_entities[newEntity->getID()] = newEntity;
-			return newEntity;
-		}
+        template <std::derived_from<AEntity> T>
+        T* createEntity(std::string name)
+        {
+            T* newEntity = new T(name);
+            _entities[newEntity->getID()] = newEntity;
+            return newEntity;
+        }
 
-		template <std::derived_from<AComponent> T>
-		T* createComponent(std::string name)
-		{
-			T* newComp = new T(name);
-			_components[newComp->getID()] = newComp;
-			return newComp;
-		}
+        template <std::derived_from<AComponent> T>
+        T* createComponent(std::string name)
+        {
+            T* newComp = new T(name);
+            _components[newComp->getID()] = newComp;
+            return newComp;
+        }
 
-		template <std::derived_from<AComponent> T>
-		T* createComponentAndAttach(std::string name, MGE::AEntity* entity)
-		{
-			T* newComp = new T(name);
-			_components[newComp->getID()] = newComp;
-			_compToEntityLink[newComp->getID()] = entity->getID();
-			entity->attachComponent(newComp);
-			return newComp;
-		}
-	};
+        template <std::derived_from<AComponent> T>
+        T* createComponentAndAttach(std::string name, MGE::AEntity* entity)
+        {
+            T* newComp = new T(name);
+            _components[newComp->getID()] = newComp;
+            _compToEntityLink[newComp->getID()] = entity->getID();
+            entity->attachComponent(newComp);
+            return newComp;
+        }
+    };
 }

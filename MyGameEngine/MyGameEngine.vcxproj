@@ -163,6 +163,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SpriteRendererComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AComponent.cpp" />
@@ -178,6 +179,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SpriteRendererComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

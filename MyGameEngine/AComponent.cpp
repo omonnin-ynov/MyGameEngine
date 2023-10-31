@@ -1,11 +1,6 @@
 #include "AComponent.h"
 #include "Application.h"
 
-unsigned int MGE::AComponent::createID()
-{
-    return 0;
-}
-
 MGE::AComponent::AComponent()
 {
     _ID = Application::getInstance()->GenerateID();
@@ -34,7 +29,7 @@ void MGE::AComponent::LateUpdate(float deltaTime)
 {
 }
 
-unsigned int MGE::AComponent::getID()
+uint64_t MGE::AComponent::getID()
 {
     return _ID;
 }

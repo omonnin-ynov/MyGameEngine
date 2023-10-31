@@ -1,7 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <MyGameEngine/Application.h>
-#include "Game.h"
+#include <MyGameEngine/ResourceManager.h>
 #include <MyGameEngine/AEntity.h>
+#include <MyGameEngine/SpriteRendererComponent.h>
 #include <MyGameEngine/CircleComponent.h>
 #include <MyGameEngine/CameraComponent.h>
 
@@ -10,8 +11,19 @@ int main()
     MGE::Application* app = MGE::Application::getInstance();
     app->initalizeWindow(800, 800);
 
+    MGE::ResourceManager* resManager = MGE::ResourceManager::getInstance();
+
     auto circle1 = app->createEntity<MGE::AEntity>("circle1");
-    auto circleComp1 = app->createComponentAndAttach<MGE::CircleComponent>("circleComp1", circle1);
+    auto SpriteComp1 = app->createComponentAndAttach<MGE::SpriteRendererComponent>("spriteRenderer1", circle1);
+
+    sf::Texture awesomeTexture;
+    if (!awesomeTexture.loadFromFile("C:\\Users\\doomb\\source\\repos\\MyGameEngine\\Game\\res\\awesomeface.png"))
+    {
+        std::cerr << "Could not load texture" << std::endl;
+    }
+
+    SpriteComp1->setTexture(awesomeTexture);
+    awesomeTexture.~Texture();
 
     auto circle2 = app->createEntity<MGE::AEntity>("circle2");
     auto circleComp2 = app->createComponentAndAttach<MGE::CircleComponent>("circleComp2", circle2);
