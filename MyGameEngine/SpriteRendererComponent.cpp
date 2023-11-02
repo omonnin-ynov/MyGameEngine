@@ -1,6 +1,7 @@
 #include "SpriteRendererComponent.h"
-#include "ResourceManager.h"
 #include <iostream>
+#include "ResourceManager.h"
+#include "Application.h"
 
 using namespace MGE;
 

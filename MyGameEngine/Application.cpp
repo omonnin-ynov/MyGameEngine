@@ -10,7 +10,7 @@ MGE::Application* MGE::Application::_instance = nullptr;
 /// Create Application with IDCounter = 0 and empty list of entities
 /// WARNING: window is nullptr before InitalizeWindow
 /// </summary>
-MGE::Application::Application() : _entities(), _components(), _compToEntityLink()
+MGE::Application::Application() : _entities(), _components(), _compToEntityLink(), _physics(b2Vec2(0.0f, 300.0f))
 {
     _IDCounter = 0;
     _window = nullptr;
@@ -56,6 +56,9 @@ void MGE::Application::initalizeWindow(int x, int y)
 
 void MGE::Application::update(float deltaTime)
 {
+    // run in separate thread if fixedUpdate is needed
+    _physics.Update(deltaTime);
+
     for (auto& [key, value] : _entities) {
         value->Update(deltaTime);
     }
@@ -64,7 +67,9 @@ void MGE::Application::update(float deltaTime)
         value->LateUpdate(deltaTime);
     }
 
-    _window->setView(*_activeCameraComponent->getView());
+    if (_activeCameraComponent && _activeCameraComponent->getView()) {
+        _window->setView(*_activeCameraComponent->getView());
+    }
     _window->clear();
 
     for (auto& [key, value] : _entities) {
@@ -107,6 +112,26 @@ uint64_t MGE::Application::GenerateID()
 {
     _IDCounter++;
     return _IDCounter;
+}
+
+std::map<uint64_t, MGE::AEntity*>* MGE::Application::getEntities()
+{
+    return &_entities;
+}
+
+std::map<uint64_t, MGE::AComponent*>* MGE::Application::getComponents()
+{
+    return &_components;
+}
+
+MGE::PhysicsSystem& MGE::Application::getPhysics()
+{
+    return _physics;
+}
+
+b2World* MGE::Application::getWorld()
+{
+    return _physics.getWorld();
 }
 
 sf::RenderWindow* MGE::Application::getWindow()

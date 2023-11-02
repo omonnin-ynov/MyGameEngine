@@ -2,6 +2,7 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "PhysicsSystem.h"
 #include "AEntity.h"
 #include "CameraComponent.h"
 
@@ -11,6 +12,8 @@ namespace MGE {
         
         uint64_t _IDCounter;
         static Application* _instance;
+        // Should be public?
+        PhysicsSystem _physics;
 
         std::map<uint64_t, AEntity*> _entities;
         std::map<uint64_t, AComponent*> _components;
@@ -34,6 +37,12 @@ namespace MGE {
         void handleInput();
 
         uint64_t GenerateID();
+
+        std::map<uint64_t, AEntity*>* getEntities();
+        std::map<uint64_t, AComponent*>* getComponents();
+
+        PhysicsSystem& getPhysics();
+        b2World* getWorld();
 
         sf::RenderWindow* getWindow();
 
