@@ -162,7 +162,10 @@
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionListener.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ICollidable.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -177,6 +180,8 @@
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionListener.cpp" />
     <ClCompile Include="MyGameEngine.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

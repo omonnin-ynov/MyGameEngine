@@ -46,7 +46,7 @@ namespace MGE {
 
         sf::RenderWindow* getWindow();
 
-        sf::View* getActiveCamera();
+        MGE::CameraComponent* getActiveCamera();
 
         void setActiveCamera(AEntity* cameraEntity);
 

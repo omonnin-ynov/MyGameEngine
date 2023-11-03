@@ -1,4 +1,5 @@
 #include "SpriteRendererComponent.h"
+#include <format> 
 #include <iostream>
 #include "ResourceManager.h"
 #include "Application.h"
@@ -7,6 +8,7 @@ using namespace MGE;
 
 SpriteRendererComponent::SpriteRendererComponent(std::string name) : _texture(), _sprite(_texture)
 {
+
 }
 
 SpriteRendererComponent::SpriteRendererComponent(std::string name, sf::Texture texture) : _texture(texture), _sprite(_texture)
@@ -20,6 +22,8 @@ void SpriteRendererComponent::Update(float deltaTime)
 void SpriteRendererComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     // A priori ça fonctionne avec le transform du sprite
+    // sf::Vector2u size = _texture.getSize();
+    // states.transform.translate(-(size.x / 2.0f), -(size.y / 2.0f));
     target.draw(_sprite, states);
 }
 
@@ -50,4 +54,20 @@ void MGE::SpriteRendererComponent::loadAndSetTexture(std::string path)
     else {
         setTexture(newTexture);
     }
+}
+
+void MGE::SpriteRendererComponent::BeginCollision(b2Contact* contact)
+{
+    auto bodyA = contact->GetFixtureA()->GetBody();
+    auto bodyB = contact->GetFixtureB()->GetBody();
+    std::cout << std::format("Collision Begin: self: {}, bodyA: ({}, {}), bodyB: ({}, {}) \n", 
+        _name, bodyA->GetPosition().x, bodyA->GetPosition().y, bodyB->GetPosition().x, bodyB->GetPosition().y);
+}
+
+void MGE::SpriteRendererComponent::EndCollision(b2Contact* contact)
+{
+    auto bodyA = contact->GetFixtureA()->GetBody();
+    auto bodyB = contact->GetFixtureB()->GetBody();
+    std::cout << std::format("Collision End: self: {}, bodyA: ({}, {}), bodyB: ({}, {}) \n",
+        _name, bodyA->GetPosition().x, bodyA->GetPosition().y, bodyB->GetPosition().x, bodyB->GetPosition().y);
 }

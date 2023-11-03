@@ -7,10 +7,9 @@ MGE::AComponent::AComponent()
     _name = "";
 }
 
-MGE::AComponent::AComponent(std::string name = "")
+MGE::AComponent::AComponent(std::string name) : _name(name)
 {
     _ID = Application::getInstance()->GenerateID();
-    _name = name;
 }
 
 void MGE::AComponent::Awake()

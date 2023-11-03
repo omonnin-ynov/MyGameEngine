@@ -143,9 +143,9 @@ sf::RenderWindow* MGE::Application::getWindow()
     return nullptr;
 }
 
-sf::View* MGE::Application::getActiveCamera()
+MGE::CameraComponent* MGE::Application::getActiveCamera()
 {
-    return nullptr;
+    return _activeCameraComponent;
 }
 
 /// <summary>

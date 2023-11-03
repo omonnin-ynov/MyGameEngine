@@ -1,10 +1,11 @@
 #pragma once
 #include "AComponent.h"
+#include "ICollidable.h"
 
 // TODO sprite colors
 namespace MGE {
     class SpriteRendererComponent :
-        public AComponent, public sf::Drawable
+        public AComponent, public sf::Drawable, public ICollidable
     {
     protected:
         sf::Sprite _sprite;
@@ -22,6 +23,10 @@ namespace MGE {
         const sf::Texture& getTexture();
         void setTexture(sf::Texture texture);
         void loadAndSetTexture(std::string path);
+
+        // Inherited via ICollidable
+        virtual void BeginCollision(b2Contact* contact) override;
+        virtual void EndCollision(b2Contact* contact) override;
     };
 
 }
