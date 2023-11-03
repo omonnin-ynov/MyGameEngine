@@ -82,9 +82,6 @@ void MGE::Application::update(float deltaTime)
 
 void MGE::Application::handleInput()
 {
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
     sf::Event inputEvent;
     while (_window->pollEvent(inputEvent)) {
         if (inputEvent.type == sf::Event::Closed()) {
@@ -94,18 +91,13 @@ void MGE::Application::handleInput()
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        shape.setPosition(shape.getPosition() + sf::Vector2f(0.0f, 0.5f));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        shape.setPosition(shape.getPosition() + sf::Vector2f(0.0f, -0.5f));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        shape.setPosition(shape.getPosition() + sf::Vector2f(0.5f, 0.0f));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        shape.setPosition(shape.getPosition() + sf::Vector2f(-0.5f, 0.0f));
     }
-    _window->draw(shape);
 }
 
 uint64_t MGE::Application::GenerateID()
@@ -153,17 +145,10 @@ MGE::CameraComponent* MGE::Application::getActiveCamera()
 /// Will grab the first CameraComponent it encounters. Does nothing if entity has no CameraComponent.
 /// </summary>
 /// <param name="cameraEntity"></param>
-void MGE::Application::setActiveCamera(AEntity* cameraEntity)
+void MGE::Application::setActiveCamera(CameraComponent* cameraComp)
 {
-    for (AComponent* comp : cameraEntity->getComponents()) {
-        auto cameraComp = dynamic_cast<CameraComponent*>(comp);
-        if (cameraComp) {
-            _window->setView(*(cameraComp->getView()));
-            _activeCameraComponent = cameraComp;
-            return;
-        }
-    }
-    return;
+    _window->setView(*(cameraComp->getView()));
+    _activeCameraComponent = cameraComp;
 }
 
 MGE::AEntity* MGE::Application::getEntityFromID(uint64_t ID)

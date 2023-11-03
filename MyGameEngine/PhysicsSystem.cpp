@@ -16,7 +16,7 @@ void PhysicsSystem::Update(float deltaTime)
     std::map<uint64_t, AComponent*>* components = app->getComponents();
 
     for (auto [ID, entity] : *entities) {
-        for (auto comp : entity->getComponents()) {
+        for (auto comp : *entity->getComponents()) {
             auto rigidBodyComp = dynamic_cast<RigidBodyComponent*>(comp);
 
             if (rigidBodyComp) {
@@ -30,7 +30,7 @@ void PhysicsSystem::Update(float deltaTime)
     _world.Step(deltaTime, 8, 3);
 
     for (auto [ID, entity] : *entities) {
-        for (auto comp : entity->getComponents()) {
+        for (auto comp : *entity->getComponents()) {
             auto rigidBodyComp = dynamic_cast<RigidBodyComponent*>(comp);
 
             if (rigidBodyComp) {

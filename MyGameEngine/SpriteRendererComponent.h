@@ -25,8 +25,8 @@ namespace MGE {
         void loadAndSetTexture(std::string path);
 
         // Inherited via ICollidable
-        virtual void BeginCollision(b2Contact* contact) override;
-        virtual void EndCollision(b2Contact* contact) override;
+        virtual void BeginCollision(Collision collision) override;
+        virtual void EndCollision(Collision collision) override;
     };
 
 }

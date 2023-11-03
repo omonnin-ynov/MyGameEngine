@@ -1,4 +1,5 @@
 #include "CollisionListener.h"
+#include "Collision.h"
 #include "Application.h"
 #include "ICollidable.h"
 #include "RigidBodyComponent.h"
@@ -14,7 +15,7 @@ void MGE::CollisionListener::BeginContact(b2Contact* contact)
         std::vector<ICollidable*> collidableComps{};
         RigidBodyComponent* rigidBody = nullptr;
 
-        for (auto comp : entity->getComponents()) {
+        for (auto comp : *entity->getComponents()) {
             auto collidable = dynamic_cast<ICollidable*>(comp);
             auto rigidBodyTest = dynamic_cast<RigidBodyComponent*>(comp);
 
@@ -27,7 +28,7 @@ void MGE::CollisionListener::BeginContact(b2Contact* contact)
         }
         if (collidableComps.size() > 0 && rigidBody) {
             for (ICollidable* collidable : collidableComps) {
-                collidable->BeginCollision(contact);
+                collidable->BeginCollision(Collision(rigidBody->getBody(), rigidBody->getBody() == bodyA ? bodyA : bodyB));
             }
         }
     }
@@ -44,7 +45,7 @@ void MGE::CollisionListener::EndContact(b2Contact* contact)
         std::vector<ICollidable*> collidableComps{};
         RigidBodyComponent* rigidBody = nullptr;
 
-        for (auto comp : entity->getComponents()) {
+        for (auto comp : *entity->getComponents()) {
             auto collidable = dynamic_cast<ICollidable*>(comp);
             auto rigidBodyTest = dynamic_cast<RigidBodyComponent*>(comp);
 
@@ -57,7 +58,7 @@ void MGE::CollisionListener::EndContact(b2Contact* contact)
         }
         if (collidableComps.size() > 0 && rigidBody) {
             for (ICollidable* collidable : collidableComps) {
-                collidable->EndCollision(contact);
+                collidable->EndCollision(Collision(rigidBody->getBody(), rigidBody->getBody() == bodyA ? bodyA : bodyB));
             }
         }
     }

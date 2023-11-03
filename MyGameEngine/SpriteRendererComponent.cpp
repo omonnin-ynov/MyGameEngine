@@ -8,11 +8,12 @@ using namespace MGE;
 
 SpriteRendererComponent::SpriteRendererComponent(std::string name) : _texture(), _sprite(_texture)
 {
-
+    _name = name;
 }
 
 SpriteRendererComponent::SpriteRendererComponent(std::string name, sf::Texture texture) : _texture(texture), _sprite(_texture)
 {
+    _name = name;
 }
 
 void SpriteRendererComponent::Update(float deltaTime)
@@ -56,7 +57,7 @@ void MGE::SpriteRendererComponent::loadAndSetTexture(std::string path)
     }
 }
 
-void MGE::SpriteRendererComponent::BeginCollision(b2Contact* contact)
+void MGE::SpriteRendererComponent::BeginCollision(Collision collision)
 {
     auto bodyA = contact->GetFixtureA()->GetBody();
     auto bodyB = contact->GetFixtureB()->GetBody();
@@ -64,7 +65,7 @@ void MGE::SpriteRendererComponent::BeginCollision(b2Contact* contact)
         _name, bodyA->GetPosition().x, bodyA->GetPosition().y, bodyB->GetPosition().x, bodyB->GetPosition().y);
 }
 
-void MGE::SpriteRendererComponent::EndCollision(b2Contact* contact)
+void MGE::SpriteRendererComponent::EndCollision(Collision collision)
 {
     auto bodyA = contact->GetFixtureA()->GetBody();
     auto bodyB = contact->GetFixtureB()->GetBody();

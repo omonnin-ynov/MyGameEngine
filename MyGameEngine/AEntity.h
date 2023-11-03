@@ -20,7 +20,7 @@ namespace MGE {
         virtual void Update(float deltaTime);
         virtual void LateUpdate(float deltaTime);
 
-        const std::vector<AComponent*> getComponents();
+        std::vector<AComponent*>* getComponents();
         void attachComponent(AComponent* component);
 
         uint64_t getID();

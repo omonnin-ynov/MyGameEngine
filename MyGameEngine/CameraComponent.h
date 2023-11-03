@@ -6,7 +6,7 @@ namespace MGE {
     class CameraComponent : public AComponent
     {
     protected:
-        sf::View* _camera;
+        sf::View _camera;
         bool _rotationFollowsParent;
 
     public:

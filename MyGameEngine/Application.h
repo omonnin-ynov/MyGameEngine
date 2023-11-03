@@ -48,7 +48,7 @@ namespace MGE {
 
         MGE::CameraComponent* getActiveCamera();
 
-        void setActiveCamera(AEntity* cameraEntity);
+        void setActiveCamera(CameraComponent* cameraComp);
 
         AEntity* getEntityFromID(uint64_t ID);
 

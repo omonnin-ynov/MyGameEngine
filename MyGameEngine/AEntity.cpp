@@ -42,9 +42,9 @@ void MGE::AEntity::LateUpdate(float deltaTime)
     }
 }
 
-const std::vector<MGE::AComponent*> MGE::AEntity::getComponents()
+std::vector<MGE::AComponent*>* MGE::AEntity::getComponents()
 {
-    return _components;
+    return &_components;
 }
 
 void MGE::AEntity::attachComponent(AComponent* component) 
@@ -72,7 +72,7 @@ void MGE::AEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 /// <summary>
 /// E
 /// </summary>
-/// <returns></returns>
+/// <returns>E</returns>
 std::string MGE::AEntity::E()
 {
     return "E";
