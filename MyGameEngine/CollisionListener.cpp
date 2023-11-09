@@ -11,7 +11,7 @@ void MGE::CollisionListener::BeginContact(b2Contact* contact)
 
     auto entities = *Application::getInstance()->getEntities();
 
-    for (auto [ID, entity] : entities) {
+    for (auto entity : entities | std::views::values) {
         std::vector<ICollidable*> collidableComps{};
         RigidBodyComponent* rigidBody = nullptr;
 
@@ -26,7 +26,7 @@ void MGE::CollisionListener::BeginContact(b2Contact* contact)
                 rigidBody = rigidBodyTest;
             }
         }
-        if (collidableComps.size() > 0 && rigidBody) {
+        if (!collidableComps.empty() && rigidBody) {
             for (ICollidable* collidable : collidableComps) {
                 collidable->BeginCollision(Collision(rigidBody->getBody(), rigidBody->getBody() == bodyA ? bodyA : bodyB));
             }
@@ -41,7 +41,7 @@ void MGE::CollisionListener::EndContact(b2Contact* contact)
 
     auto entities = *Application::getInstance()->getEntities();
 
-    for (auto [ID, entity] : entities) {
+    for (auto entity : entities | std::views::values) {
         std::vector<ICollidable*> collidableComps{};
         RigidBodyComponent* rigidBody = nullptr;
 
@@ -56,7 +56,7 @@ void MGE::CollisionListener::EndContact(b2Contact* contact)
                 rigidBody = rigidBodyTest;
             }
         }
-        if (collidableComps.size() > 0 && rigidBody) {
+        if (!collidableComps.empty() && rigidBody) {
             for (ICollidable* collidable : collidableComps) {
                 collidable->EndCollision(Collision(rigidBody->getBody(), rigidBody->getBody() == bodyA ? bodyA : bodyB));
             }

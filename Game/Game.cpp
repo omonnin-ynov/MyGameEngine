@@ -9,6 +9,8 @@
 #include <MyGameEngine/CircleComponent.h>
 #include <MyGameEngine/CameraComponent.h>
 
+#include "MyGameEngine/PlayerInput.h"
+
 int main()
 {
     MGE::Application* app = MGE::Application::getInstance();
@@ -21,6 +23,7 @@ int main()
     // TODO rotation still incorrect
     circle1->setPosition(0.0f, -1000.0f);
     circle1->setRotation(-45.0f);
+    auto InputComponent = app->createComponentAndAttach<MGE::PlayerInput>("playerInput", circle1);
     // Idée: le createComponent retourne une fonction d'init qu'il faut exécuter avant que le component soit prêt
     auto SpriteComp1 = app->createComponentAndAttach<MGE::SpriteRendererComponent>("spriteRenderer1", circle1);
 
@@ -28,7 +31,7 @@ int main()
     SpriteComp1->loadAndSetTexture(awesomeTexturePath);
 
     auto rigidBodyComp = app->createComponentAndAttach<MGE::RigidBodyComponent>("rigidSphere", circle1);
-    rigidBodyComp->setBodyType(b2BodyType::b2_dynamicBody);
+    rigidBodyComp->setBodyType(b2BodyType::b2_staticBody);
 
     auto colliderComp = app->createComponentAndAttach<MGE::BoxCollider>("SphereCollider", circle1);
     //sf::Vector2f textureSize = SpriteComp1->getTexture().getSize() * SpriteComp1->getSprite().getScale();
@@ -55,7 +58,7 @@ int main()
     auto camera = app->createComponentAndAttach<MGE::CameraComponent>("Camera", circle1);
     camera->setCameraRotationFollowsParent(false);
     camera->setCameraZoom(2560, 1600);
-    app->setActiveCamera(circle1);
+    app->setActiveCamera(camera);
 
     app->start();
 

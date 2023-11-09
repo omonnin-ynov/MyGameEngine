@@ -7,8 +7,9 @@ namespace MGE
         public AComponent
     {
     protected:
-        const sf::Vector2f _movementMultiplier{100.0f, 100.0f};
+        const sf::Vector2f _movementMultiplier{300.0f, 300.0f};
     public:
+        PlayerInput(std::string name);
         void Update(float deltaTime) override;
     };
 }

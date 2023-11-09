@@ -10,7 +10,7 @@ MGE::Application* MGE::Application::_instance = nullptr;
 /// Create Application with IDCounter = 0 and empty list of entities
 /// WARNING: window is nullptr before InitalizeWindow
 /// </summary>
-MGE::Application::Application() : _entities(), _components(), _physics(b2Vec2(0.0f, 300.0f)), _compToEntityLink(), _input()
+MGE::Application::Application() : _entities(), _components(), _physics(b2Vec2(0.0f, 300.0f)), _compToEntityLink()
 {
     _IDCounter = 0;
     _window = nullptr;

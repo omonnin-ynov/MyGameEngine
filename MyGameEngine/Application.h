@@ -7,7 +7,6 @@
 #include "PhysicsSystem.h"
 #include "AEntity.h"
 #include "CameraComponent.h"
-#include "InputSystem.h"
 
 namespace MGE {
     class Application {
@@ -17,7 +16,6 @@ namespace MGE {
         static Application* _instance;
         // Should be public?
         PhysicsSystem _physics;
-        InputSystem _input;
 
         std::map<uint64_t, AEntity*> _entities;
         std::map<uint64_t, AComponent*> _components;
@@ -58,7 +56,7 @@ namespace MGE {
 
         AComponent* getComponentFromID(uint64_t ID);
 
-        AEntity* getParentComponent(AComponent* comp);
+        AEntity* getParentEntity(AComponent* comp);
 
         template <std::derived_from<AEntity> T>
         T* createEntity(std::string name)
