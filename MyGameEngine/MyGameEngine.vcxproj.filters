@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{a9d698a7-4766-4052-a48f-e386665bbe88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{8dcc19f7-a532-4972-801c-c8795ed17e3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -24,34 +30,13 @@
     <ClInclude Include="Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CircleComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRendererComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RigidBodyComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ColliderComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ICollidable.h">
@@ -61,6 +46,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRendererComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,40 +83,43 @@
     <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CircleComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteRendererComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RigidBodyComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ColliderComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CollisionListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRendererComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

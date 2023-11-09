@@ -10,7 +10,7 @@ MGE::Application* MGE::Application::_instance = nullptr;
 /// Create Application with IDCounter = 0 and empty list of entities
 /// WARNING: window is nullptr before InitalizeWindow
 /// </summary>
-MGE::Application::Application() : _entities(), _components(), _compToEntityLink(), _physics(b2Vec2(0.0f, 300.0f))
+MGE::Application::Application() : _entities(), _components(), _physics(b2Vec2(0.0f, 300.0f)), _compToEntityLink(), _input()
 {
     _IDCounter = 0;
     _window = nullptr;
@@ -56,12 +56,12 @@ void MGE::Application::initalizeWindow(int x, int y)
 
 void MGE::Application::update(float deltaTime)
 {
-    // run in separate thread if fixedUpdate is needed
-    _physics.Update(deltaTime);
-
     for (auto& [key, value] : _entities) {
         value->Update(deltaTime);
     }
+
+    // run in separate thread if fixedUpdate is needed
+    _physics.Update(deltaTime);
 
     for (auto& [key, value] : _entities) {
         value->LateUpdate(deltaTime);
@@ -172,7 +172,7 @@ MGE::AComponent* MGE::Application::getComponentFromID(uint64_t ID)
 /// </summary>
 /// <param name="comp">The component whose parent will be retrieved.</param>
 /// <returns>The parent component. Nullptr if nonexistent.</returns>
-MGE::AEntity* MGE::Application::getParentComponent(AComponent* comp)
+MGE::AEntity* MGE::Application::getParentEntity(AComponent* comp)
 {
     try {
         uint64_t ID = _compToEntityLink.at(comp->getID());

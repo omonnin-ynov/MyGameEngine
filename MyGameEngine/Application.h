@@ -2,9 +2,12 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <ranges>
+
 #include "PhysicsSystem.h"
 #include "AEntity.h"
 #include "CameraComponent.h"
+#include "InputSystem.h"
 
 namespace MGE {
     class Application {
@@ -14,6 +17,7 @@ namespace MGE {
         static Application* _instance;
         // Should be public?
         PhysicsSystem _physics;
+        InputSystem _input;
 
         std::map<uint64_t, AEntity*> _entities;
         std::map<uint64_t, AComponent*> _components;
@@ -62,6 +66,21 @@ namespace MGE {
             T* newEntity = new T(name);
             _entities[newEntity->getID()] = newEntity;
             return newEntity;
+        }
+
+        /// \brief adds all components of type T to result vector passed in param
+        /// \tparam T the type to find
+        /// \param result your vector + all registered components of type T
+        template <std::derived_from<AComponent> T>
+        void getComponentsOfType(std::vector<T*>* result)
+        {
+            for (auto comp : _components | std::views::values)
+            {
+                if (T* testComp = dynamic_cast<T*>(comp))
+                {
+                    result->push_back(testComp);
+                }
+            }
         }
 
         template <std::derived_from<AComponent> T>

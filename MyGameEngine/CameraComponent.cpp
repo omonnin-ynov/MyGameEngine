@@ -15,7 +15,7 @@ MGE::CameraComponent::CameraComponent(std::string name, float x, float y, float 
 
 void MGE::CameraComponent::LateUpdate(float deltaTime)
 {
-    AEntity* parent = Application::getInstance()->getParentComponent(this);
+    AEntity* parent = Application::getInstance()->getParentEntity(this);
     _camera.setCenter(parent->getPosition());
     if (_rotationFollowsParent) {
         _camera.setRotation(parent->getRotation());
