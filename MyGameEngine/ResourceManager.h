@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 namespace MGE {
+    class AEntity;
+
     class ResourceManager
     {
     protected:
@@ -17,5 +19,6 @@ namespace MGE {
     public:
         static ResourceManager* getInstance();
         std::string getPathFromName(std::string name);
+        AEntity* loadPrefab(std::string name);
     };
 }

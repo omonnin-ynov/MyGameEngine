@@ -169,9 +169,12 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PlayerInput.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="TimedProjectileSpawner.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="SpriteRendererComponent.h" />
+    <ClInclude Include="YAMLConversions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AComponent.cpp" />
@@ -192,6 +195,8 @@
     </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="TimedProjectileSpawner.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="SpriteRendererComponent.cpp" />

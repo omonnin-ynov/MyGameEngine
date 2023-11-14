@@ -2,6 +2,8 @@
 #include "ResourceManager.h"
 #include <Windows.h>
 
+#include "Application.h"
+
 using namespace MGE;
 
 ResourceManager* ResourceManager::_instance = nullptr;
@@ -34,3 +36,19 @@ std::string ResourceManager::getPathFromName(std::string name)
 	return "";
 }
 
+AEntity* ResourceManager::loadPrefab(std::string name)
+{
+	YAML::Node prefab = _config["prefab"];
+	auto entityName = prefab["name"].as<std::string>();
+	if (entityName.empty())
+	{
+		return nullptr;
+	}
+	auto app = MGE::Application::getInstance();
+	auto entity = app->createEntity<AEntity>(entityName);
+    for (YAML::Node prefabComps : prefab["components"])
+	{
+	    
+	}
+	return entity;
+}

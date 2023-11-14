@@ -3,3 +3,12 @@ res:
       path: awesomeface.png
     - name: container
       path: container.jpg
+prefabs:
+    - name: fireball
+      components:
+        - name: spriteComp
+          textureName: awesomeFace
+        - name: RigidBody
+          type: RigidBodyComponent
+        - name: colliderComp
+          type: ColliderComponent
