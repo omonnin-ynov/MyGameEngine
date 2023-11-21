@@ -21,9 +21,21 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TimedProjectileSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimedProjectileSpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,6 +47,9 @@
       <Filter>Resource Files\images</Filter>
     </Image>
     <Image Include="res\container.jpg">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\fireball.png">
       <Filter>Resource Files\images</Filter>
     </Image>
   </ItemGroup>

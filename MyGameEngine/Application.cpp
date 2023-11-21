@@ -73,9 +73,7 @@ void MGE::Application::update(float deltaTime)
     _window->clear();
 
     for (auto& [key, value] : _entities) {
-        if (_entities.find(key) != _entities.end()) {
-            _window->draw(*_entities[key]);
-        }
+        _window->draw(*value);
     }
     _window->display();
 }
@@ -182,4 +180,23 @@ MGE::AEntity* MGE::Application::getParentEntity(AComponent* comp)
         return nullptr;
     }
     return nullptr;
+}
+
+void MGE::Application::registerEntity(AEntity* entity)
+{
+    _entities[entity->getID()] = entity;
+}
+
+void MGE::Application::registerEntityAndAttachedComponents(AEntity* entity)
+{
+    _entities[entity->getID()] = entity;
+    for (AComponent* comp : *entity->getComponents())
+    {
+        registerComponent(comp);
+    }
+}
+
+void MGE::Application::registerComponent(AComponent* comp)
+{
+    _components[comp->getID()] = comp;
 }

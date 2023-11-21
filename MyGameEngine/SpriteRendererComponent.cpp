@@ -1,5 +1,6 @@
 #include "SpriteRendererComponent.h"
 #include <format> 
+#include <functional>
 #include <iostream>
 #include "ResourceManager.h"
 #include "Application.h"

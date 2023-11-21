@@ -3,6 +3,8 @@ res:
       path: awesomeface.png
     - name: container
       path: container.jpg
+    - name: fireball
+      path: fireball.png
 prefabs:
     - name: fireball
       components:

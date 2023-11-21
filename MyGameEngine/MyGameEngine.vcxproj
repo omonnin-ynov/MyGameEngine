@@ -141,7 +141,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -169,8 +169,6 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PlayerInput.h" />
-    <ClInclude Include="Projectile.h" />
-    <ClInclude Include="TimedProjectileSpawner.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="SpriteRendererComponent.h" />
@@ -195,8 +193,6 @@
     </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="TimedProjectileSpawner.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="SpriteRendererComponent.cpp" />

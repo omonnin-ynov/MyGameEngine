@@ -72,12 +72,6 @@
     <ClInclude Include="PlayerInput.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="TimedProjectileSpawner.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="YAMLConversions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -130,12 +124,6 @@
     </ClCompile>
     <ClCompile Include="PlayerInput.cpp">
       <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TimedProjectileSpawner.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

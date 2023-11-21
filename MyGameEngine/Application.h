@@ -58,6 +58,10 @@ namespace MGE {
 
         AEntity* getParentEntity(AComponent* comp);
 
+        void registerEntity(AEntity* entity);
+        void registerEntityAndAttachedComponents(AEntity* entity);
+        void registerComponent(AComponent* comp);
+
         template <std::derived_from<AEntity> T>
         T* createEntity(std::string name)
         {
