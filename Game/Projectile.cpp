@@ -1,6 +1,7 @@
 #include "Projectile.h"
 #include <iostream>
 #include "box2d/b2_math.h"
+#include "MyGameEngine/Application.h"
 #include "MyGameEngine/SpriteRendererComponent.h"
 
 ILM::Projectile* ILM::Projectile::copy(float speedMod, float damageMod, float areaMod, float durationMod)
@@ -55,8 +56,9 @@ void ILM::Projectile::resetTimer()
     timer.restart();
 }
 
-ILM::Projectile::Projectile(std::string name) : AEntity(name), _speed(200.0f), _damage(1.0f), _areaMod(1), _duration(), _baseSpawnRate(1.0f)
+ILM::Projectile::Projectile(std::string name) : AEntity(name), _speed(200.0f), _damage(1.0f), _areaMod(1), _duration(2.0f), _baseSpawnRate(1.0f)
 {
+    timer.restart();
 }
 
 ILM::Projectile::Projectile(const std::string& name, float speed, float damage, float areaMod, float duration, float baseSpawnRate)
@@ -67,13 +69,14 @@ ILM::Projectile::Projectile(const std::string& name, float speed, float damage, 
     _duration(duration),
     _baseSpawnRate(baseSpawnRate)
 {
+    timer.restart();
 }
 
 void ILM::Projectile::Update(float deltaTime)
 {
-    if (timer.getElapsedTime().asSeconds() < _duration)
+    if (timer.getElapsedTime().asSeconds() > _duration)
     {
-        
+        MGE::Application::getInstance()->markForDeletion(this->getID());
     }
     // rotate direction vector (0, 1) by the rotation of the projectile
     float rotation = getRotation() * (b2_pi / 180);

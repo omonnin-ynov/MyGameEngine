@@ -20,6 +20,7 @@ namespace MGE {
         std::map<uint64_t, AEntity*> _entities;
         std::map<uint64_t, AComponent*> _components;
         std::map<uint64_t, uint64_t> _compToEntityLink;
+        std::vector<uint64_t> _toBeDeleted;
 
         sf::RenderWindow* _window;
         bool _shouldExit;
@@ -60,7 +61,8 @@ namespace MGE {
 
         void registerEntity(AEntity* entity);
         void registerEntityAndAttachedComponents(AEntity* entity);
-        void registerComponent(AComponent* comp);
+        void registerComponent(AComponent* comp, AEntity* parent);
+        void markForDeletion(uint64_t ID);
 
         template <std::derived_from<AEntity> T>
         T* createEntity(std::string name)
@@ -69,17 +71,8 @@ namespace MGE {
             _entities[newEntity->getID()] = newEntity;
             return newEntity;
         }
-        // C'est pas un template mais c'est pas grave
-        template <std::derived_from<AEntity> T>
-        void destroyEntity(T* entity)
-        {
-            std::vector<MGE::AComponent*> components = *entity->getComponents();
-            for (int i = 0; i < components.size(); i++)
-            {
-                destroyComponent(components[i]);
-            }
-            delete entity;
-        }
+
+        void destroyEntity(AEntity* entity);        
 
         /// \brief adds all components of type T to result vector passed in param
         /// \tparam T the type to find
@@ -114,22 +107,6 @@ namespace MGE {
             return newComp;
         }
 
-        template <std::derived_from<AComponent> T>
-        void destroyComponent(T* comp)
-        {
-            auto linkIterator = _compToEntityLink.find(comp->getID());
-            if (linkIterator != _compToEntityLink.end())
-            {
-                auto attachedEntity = _entities[linkIterator->second];
-                attachedEntity->detachComponent(comp);
-                _compToEntityLink.erase(comp->getID());
-            }
-            auto compIterator = _components.find(comp->getID());
-            if (compIterator != _components.end())
-            {
-                _components.erase(comp->getID());
-            }
-            delete comp;
-        }
+        void destroyComponent(AComponent* comp);
     };
 }

@@ -4,9 +4,10 @@ void Update() {
 
 }
 
-MGE::ColliderComponent::ColliderComponent() : _fixtureDef()
+MGE::ColliderComponent::ColliderComponent(std::string name) : AComponent(name), _fixtureDef()
 {
 }
+
 
 void MGE::ColliderComponent::createFixture(b2Body& body)
 {  

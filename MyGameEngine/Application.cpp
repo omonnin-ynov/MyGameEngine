@@ -76,6 +76,20 @@ void MGE::Application::update(float deltaTime)
         _window->draw(*value);
     }
     _window->display();
+
+    for (uint64_t ID : _toBeDeleted)
+    {
+        auto compIterator = _components.find(ID);
+        if (compIterator != _components.end())
+        {
+            destroyComponent(compIterator->second);
+        }
+        auto entityIterator = _entities.find(ID);
+        if (entityIterator != _entities.end())
+        {
+            destroyEntity(entityIterator->second);
+        }
+    }
 }
 
 void MGE::Application::handleInput()
@@ -192,11 +206,49 @@ void MGE::Application::registerEntityAndAttachedComponents(AEntity* entity)
     _entities[entity->getID()] = entity;
     for (AComponent* comp : *entity->getComponents())
     {
-        registerComponent(comp);
+        registerComponent(comp, entity);
     }
 }
 
-void MGE::Application::registerComponent(AComponent* comp)
+void MGE::Application::destroyEntity(MGE::AEntity* entity)
+{
+    std::vector<MGE::AComponent*> components = *entity->getComponents();
+    for (int i = 0; i < components.size(); i++)
+    {
+        destroyComponent(components[i]);
+    }
+    auto entityIterator = _entities.find(entity->getID());
+    if (entityIterator != _entities.end())
+    {
+        _entities.erase(entityIterator);
+    }
+    delete entity;
+}
+
+void MGE::Application::registerComponent(AComponent* comp, MGE::AEntity* parent)
 {
     _components[comp->getID()] = comp;
+    _compToEntityLink[comp->getID()] = parent->getID();
+}
+
+void MGE::Application::destroyComponent(MGE::AComponent* comp)
+{
+    auto linkIterator = _compToEntityLink.find(comp->getID());
+    if (linkIterator != _compToEntityLink.end())
+    {
+        auto attachedEntity = _entities[linkIterator->second];
+        attachedEntity->detachComponent(comp);
+        _compToEntityLink.erase(comp->getID());
+    }
+    auto compIterator = _components.find(comp->getID());
+    if (compIterator != _components.end())
+    {
+        _components.erase(comp->getID());
+    }
+    delete comp;
+}
+
+void MGE::Application::markForDeletion(uint64_t ID)
+{
+    _toBeDeleted.push_back(ID);
 }

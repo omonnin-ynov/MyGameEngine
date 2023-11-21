@@ -2,7 +2,7 @@
 #include "MyGameEngine/Application.h"
 #include "Projectile.h"
 
-ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name) : _spawnRateMod(1.0f), _speedMod(1.0f), _damageMod(1.0f), _areaMod(1.0f), _amountMod(1)
+ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name) : _spawnRateMod(1.0f), _speedMod(1.0f), _damageMod(1.0f), _areaMod(1.0f), _amountMod(1), _durationMod(1.0f)
 {
 }
 

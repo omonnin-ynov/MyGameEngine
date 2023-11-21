@@ -1,7 +1,8 @@
 #include "BoxCollider.h"
 #include "Application.h"
+#include "AComponent.h"
 
-MGE::BoxCollider::BoxCollider(std::string name) : _shape()
+MGE::BoxCollider::BoxCollider(std::string name) : ColliderComponent(name), _shape()
 {
     _x = 4.0f;
     _y = 4.0f;
@@ -11,9 +12,11 @@ MGE::BoxCollider::BoxCollider(std::string name) : _shape()
     _fixtureDef.friction = 0.3f;
 }
 
-void MGE::BoxCollider::createFixture(b2Body& body)
+MGE::BoxCollider::BoxCollider(std::string name, b2FixtureDef fixtureDef) : ColliderComponent(name)
 {
-    _fixture = body.CreateFixture(&_fixtureDef);
+    _x = 0.0f;
+    _y = 0.0f;
+    _fixtureDef = fixtureDef;
 }
 
 void MGE::BoxCollider::Awake()
@@ -41,5 +44,7 @@ void MGE::BoxCollider::setHalfSize(float x, float y)
 {
     _x = x;
     _y = y;
-    _shape.SetAsBox(_x, _y);
+    // TODO boxes instanciées au centre
+    float scale = Application::getInstance()->getPhysics().WorldScale;
+    _shape.SetAsBox(_x / scale, _y / scale);
 }

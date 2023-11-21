@@ -11,13 +11,13 @@ namespace MGE {
         b2Fixture* _fixture;
 
     public:
-        ColliderComponent();
+        ColliderComponent(std::string name);
 
-        virtual void createFixture(b2Body& body);
         virtual const b2Shape* getColliderShape() = 0;
 
         void setDensity(float density);
         void setFriction(float friction);
+        void createFixture(b2Body& body);
     };
 
 }

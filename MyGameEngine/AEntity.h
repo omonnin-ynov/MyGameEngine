@@ -14,7 +14,6 @@ namespace MGE {
         AEntity();
         AEntity(std::string name);
         AEntity(std::string name, float x, float y);
-        ~AEntity();
 
         virtual void Awake();
         virtual void Start();

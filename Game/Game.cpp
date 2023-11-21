@@ -47,12 +47,20 @@ int main()
     fireballSprite->loadAndSetTexture(resManager->getPathFromName("fireball"));
     fireball->attachComponent(fireballSprite);
 
-    //auto fireballRigidBody = app->createComponentAndAttach<MGE::RigidBodyComponent>("fireballRigidBody", fireball);
-    //fireballRigidBody->setBodyType(b2BodyType::b2_staticBody);
+    auto fireballRigidBody = app->createComponentAndAttach<MGE::RigidBodyComponent>("fireballRigidBody", fireball);
+    fireballRigidBody->setBodyType(b2BodyType::b2_staticBody);
+    fireball->attachComponent(fireballRigidBody);
 
-    //auto fireballCollider = app->createComponentAndAttach<MGE::BoxCollider>("SphereCollider2", fireball);
-    //fireballCollider->setHalfSize(12.0f, 4.0f);
-    //fireballCollider->createFixture(*fireballRigidBody->getBody());
+    b2FixtureDef fireballFixtureDef = b2FixtureDef();
+    fireballFixtureDef.isSensor = true;
+    sf::IntRect spriteSize = fireballSprite->getSprite().getTextureRect();
+    b2PolygonShape box{};
+    box.SetAsBox(spriteSize.width, spriteSize.height);
+    fireballFixtureDef.shape = &box;
+    auto fireballCollider = new MGE::BoxCollider("fireballCollider", fireballFixtureDef);
+
+    fireballCollider->createFixture(*fireballRigidBody->getBody());
+    fireball->attachComponent(fireballCollider);
 
     TimedProjectileSpawner->addProjectile(fireball);
 
