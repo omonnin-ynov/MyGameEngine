@@ -24,8 +24,6 @@ void SpriteRendererComponent::Update(float deltaTime)
 void SpriteRendererComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     // A priori ça fonctionne avec le transform du sprite
-    // sf::Vector2u size = _texture.getSize();
-    // states.transform.translate(-(size.x / 2.0f), -(size.y / 2.0f));
     target.draw(_sprite, states);
 }
 

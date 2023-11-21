@@ -13,8 +13,9 @@ namespace MGE {
 
     public:
         RigidBodyComponent(std::string name);
-        b2Body* getBody();
+        ~RigidBodyComponent();
 
+        b2Body* getBody();
         b2BodyType getBodyType();
         void setBodyType(b2BodyType bodyType);
 

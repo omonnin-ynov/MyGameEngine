@@ -14,6 +14,7 @@ namespace MGE {
         AEntity();
         AEntity(std::string name);
         AEntity(std::string name, float x, float y);
+        ~AEntity();
 
         virtual void Awake();
         virtual void Start();
@@ -22,6 +23,7 @@ namespace MGE {
 
         std::vector<AComponent*>* getComponents();
         void attachComponent(AComponent* component);
+        void detachComponent(AComponent* component);
 
         uint64_t getID();
 

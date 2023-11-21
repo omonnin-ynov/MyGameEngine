@@ -52,6 +52,18 @@ void MGE::AEntity::attachComponent(AComponent* component)
     _components.push_back(component);
 }
 
+void MGE::AEntity::detachComponent(AComponent* component)
+{
+    auto it = std::find(_components.begin(), _components.end(), component);
+    if (it != _components.end())
+    {
+        _components.erase(it);
+    } else
+    {
+        std::cerr << "warning: AEntity::DetachComponent : component not found\n";
+    }
+}
+
 uint64_t MGE::AEntity::getID()
 {
     return _ID;

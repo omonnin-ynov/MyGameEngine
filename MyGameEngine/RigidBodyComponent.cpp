@@ -6,6 +6,11 @@ MGE::RigidBodyComponent::RigidBodyComponent(std::string name) : _bodyDef()
     _body = Application::getInstance()->getWorld()->CreateBody(&_bodyDef);
 }
 
+MGE::RigidBodyComponent::~RigidBodyComponent()
+{
+    MGE::Application::getInstance()->getWorld()->DestroyBody(_body);
+}
+
 b2Body* MGE::RigidBodyComponent::getBody()
 {
     return _body;

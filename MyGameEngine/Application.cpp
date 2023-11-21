@@ -30,7 +30,7 @@ void MGE::Application::start()
     if (_window) {
         sf::Clock clock;
         while (!_shouldExit) {
-            // handleInput();
+            handleInput();
             float deltaTime = clock.restart().asSeconds();
             update(deltaTime);
         }

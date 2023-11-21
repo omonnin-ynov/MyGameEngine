@@ -23,7 +23,7 @@ int main()
     auto player = app->createEntity<MGE::AEntity>("circle1");
 
     // TODO rotation still incorrect
-    player->setPosition(0.0f, 0.0f);
+    player->setPosition(0.0f, -500.0f);
     player->setRotation(-45.0f);
     auto InputComponent = app->createComponentAndAttach<MGE::PlayerInput>("playerInput", player);
 
@@ -33,7 +33,7 @@ int main()
     SpriteComp1->loadAndSetTexture(awesomeTexturePath);
 
     auto rigidBodyComp = app->createComponentAndAttach<MGE::RigidBodyComponent>("rigidSphere", player);
-    rigidBodyComp->setBodyType(b2BodyType::b2_staticBody);
+    rigidBodyComp->setBodyType(b2BodyType::b2_dynamicBody);
 
     auto colliderComp = app->createComponentAndAttach<MGE::BoxCollider>("SphereCollider", player);
     //sf::Vector2f textureSize = SpriteComp1->getTexture().getSize() * SpriteComp1->getSprite().getScale();

@@ -6,6 +6,15 @@ ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name) : _spawnRa
 {
 }
 
+ILM::TimedProjectileSpawner::~TimedProjectileSpawner()
+{
+    auto app = MGE::Application::getInstance();
+    for (int i = 0; i < _projectiles.size(); i++)
+    {
+        delete _projectiles[i];
+    }
+}
+
 void ILM::TimedProjectileSpawner::Update(float deltaTime)
 {
     MGE::AComponent::Update(deltaTime);

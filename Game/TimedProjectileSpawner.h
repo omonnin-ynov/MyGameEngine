@@ -18,6 +18,7 @@ namespace ILM
 
     public:
         TimedProjectileSpawner(std::string name);
+        ~TimedProjectileSpawner();
 
         virtual void Update(float deltaTime) override;
 
