@@ -1,41 +1,153 @@
 #include "TimedProjectileSpawner.h"
+#include <format>
 #include "MyGameEngine/Application.h"
 #include "Projectile.h"
+#include "MyGameEngine/BoxCollider.h"
+#include "MyGameEngine/RigidBodyComponent.h"
+#include "MyGameEngine/SpriteRendererComponent.h"
 
 ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name) : _spawnRateMod(1.0f), _speedMod(1.0f), _damageMod(1.0f), _areaMod(1.0f), _amountMod(1), _durationMod(1.0f)
 {
 }
 
-ILM::TimedProjectileSpawner::~TimedProjectileSpawner()
+float ILM::TimedProjectileSpawner::getSpawnRateMod() const
 {
-    auto app = MGE::Application::getInstance();
-    for (int i = 0; i < _projectiles.size(); i++)
-    {
-        delete _projectiles[i];
-    }
+    return _spawnRateMod;
+}
+
+void ILM::TimedProjectileSpawner::setSpawnRateMod(float spawnRateMod)
+{
+    _spawnRateMod = spawnRateMod;
+}
+
+float ILM::TimedProjectileSpawner::getSpeedMod() const
+{
+    return _speedMod;
+}
+
+void ILM::TimedProjectileSpawner::setSpeedMod(float speedMod)
+{
+    _speedMod = speedMod;
+}
+
+float ILM::TimedProjectileSpawner::getDamageMod() const
+{
+    return _damageMod;
+}
+
+void ILM::TimedProjectileSpawner::setDamageMod(float damageMod)
+{
+    _damageMod = damageMod;
+}
+
+float ILM::TimedProjectileSpawner::getAreaMod() const
+{
+    return _areaMod;
+}
+
+void ILM::TimedProjectileSpawner::setAreaMod(float areaMod)
+{
+    _areaMod = areaMod;
+}
+
+float ILM::TimedProjectileSpawner::getDurationMod() const
+{
+    return _durationMod;
+}
+
+void ILM::TimedProjectileSpawner::setDurationMod(float durationMod)
+{
+    _durationMod = durationMod;
+}
+
+int ILM::TimedProjectileSpawner::getAmountMod() const
+{
+    return _amountMod;
+}
+
+void ILM::TimedProjectileSpawner::setAmountMod(int amountMod)
+{
+    _amountMod = amountMod;
+}
+
+ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name, float spawnRateMod, float speedMod, float damageMod, float areaMod,
+                                                    float durationMod, int amountMod)
+    : AComponent(std::move(name)),
+    _spawnRateMod(spawnRateMod),
+    _speedMod(speedMod),
+    _damageMod(damageMod),
+    _areaMod(areaMod),
+    _durationMod(durationMod),
+    _amountMod(amountMod)
+{
 }
 
 void ILM::TimedProjectileSpawner::Update(float deltaTime)
 {
-    MGE::AComponent::Update(deltaTime);
-    auto app = MGE::Application::getInstance();
-    for (auto projectile: _projectiles)
+    MGE::Application* app =  MGE::Application::getInstance();
+
+    // attempt projectile spawn
+    for (auto& [name, info] : _projectiles)
     {
-        if (projectile->getBaseSpawnRate() * _spawnRateMod < projectile->getElapsedTime())
+        if (info._clock.getElapsedTime().asSeconds() > info._baseSpawnRate * _spawnRateMod)
         {
-            for (int i = 0; i < _amountMod; i++)
+            info._clock.restart();
+
+            // projectiles are always of projectile class or subclass and have a spriteRenderer, rigidBody and collider
+            ILM::Projectile* newProj;
+            /*switch (info._projectileType)
             {
-                auto newProj = projectile->copy(_speedMod, _damageMod, _areaMod, _durationMod);
-                app->registerEntityAndAttachedComponents(newProj);
+            case "projectile":*/
+                newProj = new Projectile(name, info._speed * _speedMod, info._damage * _damageMod, _areaMod, info._duration *_durationMod);
+                newProj->setPosition(app->getParentEntity(this)->getPosition());
+                newProj->setRotation(std::rand() % 361);
+            //}
+            if (!newProj)
+            {
+                std::cout << std::format("warning: could not instantiate projectile entity name : {}, type : {} in projectileSpawner::Update\n", name, info._projectileType);
+                continue;
             }
-            projectile->resetTimer();
+
+            auto projSprite = new MGE::SpriteRendererComponent(name + "Sprite");
+            projSprite->setTexture(info._texture);
+
+            auto projRigidBody = new MGE::RigidBodyComponent(name + "RigidBody");
+            projRigidBody->setBodyType(b2BodyType::b2_staticBody);
+
+            b2FixtureDef projFixtureDef = b2FixtureDef();
+            projFixtureDef.isSensor = true;
+            sf::IntRect spriteSize = projSprite->getSprite().getTextureRect();
+            b2PolygonShape box{};
+            box.SetAsBox(spriteSize.width, spriteSize.height);
+            projFixtureDef.shape = &box;
+
+            auto projCollider = new MGE::BoxCollider("fireballCollider", projFixtureDef);
+            projCollider->createFixture(*projRigidBody->getBody());
+
+            newProj->attachComponent(projSprite);
+            newProj->attachComponent(projRigidBody);
+            newProj->attachComponent(projCollider);
+
+            // thankfully, adding elements to std::map does not invalidate iterators (from the Update implicit for loop)
+            app->registerEntityAndAttachedComponents(newProj);
         }
     }
 }
 
-void ILM::TimedProjectileSpawner::addProjectile(Projectile* projectile)
+void ILM::TimedProjectileSpawner::addProjectile(std::string projectileName, std::string projectileType,
+                                                std::string texturePath, float speed, float damage, float duration, float baseSpawnRate)
 {
-    _projectiles.push_back(projectile);
+    if (!_projectiles.contains(projectileName))
+    {
+        sf::Texture texture;
+        if (!texture.loadFromFile(texturePath))
+        {
+            std::cout << "warning: Could not load texture in timedProjectileSpawner::addProjectile : " << texturePath << "\n";
+            return;
+        }
+        _projectiles[projectileName] = ProjectileInfo{ projectileType, texture, speed, damage, duration, baseSpawnRate };
+    }
+    else std::cout << "warning: projectile with same name already exists in projectile spawner\n";
 }
 
 void ILM::TimedProjectileSpawner::clearProjectiles()
@@ -43,7 +155,11 @@ void ILM::TimedProjectileSpawner::clearProjectiles()
     _projectiles.clear();
 }
 
-void ILM::TimedProjectileSpawner::removeProjectile(Projectile* projectile)
+void ILM::TimedProjectileSpawner::removeProjectile(std::string projectileName)
 {
-    
+    int removed = _projectiles.erase(projectileName);
+    if (!removed)
+    {
+        std::cout << "warning: attempt to remove nonexistent projectile from projectile spawner\n";
+    }
 }

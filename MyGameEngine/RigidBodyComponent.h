@@ -13,7 +13,7 @@ namespace MGE {
 
     public:
         RigidBodyComponent(std::string name);
-        ~RigidBodyComponent();
+        ~RigidBodyComponent() override;
 
         b2Body* getBody();
         b2BodyType getBodyType();

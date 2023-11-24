@@ -1,16 +1,31 @@
+---
 res:
-    - name: awesomeFace
-      path: awesomeface.png
-    - name: container
-      path: container.jpg
-    - name: fireball
-      path: fireball.png
-prefabs:
-    - name: fireball
-      components:
-        - name: spriteComp
-          textureName: awesomeFace
-        - name: RigidBody
-          type: RigidBodyComponent
-        - name: colliderComp
-          type: ColliderComponent
+  - name: awesomeFace
+    path: awesomeface.png
+  - name: container
+    path: container.jpg
+  - name: fireball
+    path: fireball.png
+  - name: simonIdle
+    path: simonIdle.png
+player:
+  - name: simon
+    sprite:
+      name: playerSprite
+      textureName: simonIdle
+    projectileSpawner:
+      name: playerProjectileSpawner
+      spawnRateMod: 1
+      speedMod: 20
+      damageMod: 1
+      areaMod: 1
+      durationMod: 1
+      amountMod: 1
+      playerProjectiles:
+        - name: fireball
+          type: projectile
+          textureName: fireball
+          speed: 20
+          damage: 1
+          duration: 2
+          baseSpawnRate: 1

@@ -11,6 +11,9 @@ namespace MGE {
     public:
         AComponent();
         AComponent(std::string name);
+
+        virtual ~AComponent() = default;
+
         virtual void Awake();
         virtual void Start();
         virtual void Update(float deltaTime);

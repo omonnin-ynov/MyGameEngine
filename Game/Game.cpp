@@ -8,7 +8,7 @@
 #include <MyGameEngine/BoxCollider.h>
 #include <MyGameEngine/CircleComponent.h>
 #include <MyGameEngine/CameraComponent.h>
-
+#include "GameManager.h"
 #include "Projectile.h"
 #include "MyGameEngine/PlayerInput.h"
 #include "TimedProjectileSpawner.h"
@@ -18,51 +18,13 @@ int main()
     MGE::Application* app = MGE::Application::getInstance();
     app->initalizeWindow(1280, 800);
 
-    MGE::ResourceManager* resManager = MGE::ResourceManager::getInstance();
+    auto resManager = new ILM::ILMResourceManager();
 
-    auto player = app->createEntity<MGE::AEntity>("circle1");
+    MGE::AEntity* player = resManager->instantiatePlayer();
 
     // TODO rotation still incorrect
     player->setPosition(0.0f, -500.0f);
-    player->setRotation(-45.0f);
     auto InputComponent = app->createComponentAndAttach<MGE::PlayerInput>("playerInput", player);
-
-    // Idée: le createComponent retourne une fonction d'init qu'il faut exécuter avant que le component soit prêt
-    auto SpriteComp1 = app->createComponentAndAttach<MGE::SpriteRendererComponent>("spriteRenderer1", player);
-    std::string awesomeTexturePath = resManager->getPathFromName("awesomeFace");
-    SpriteComp1->loadAndSetTexture(awesomeTexturePath);
-
-    auto rigidBodyComp = app->createComponentAndAttach<MGE::RigidBodyComponent>("rigidSphere", player);
-    rigidBodyComp->setBodyType(b2BodyType::b2_dynamicBody);
-
-    auto colliderComp = app->createComponentAndAttach<MGE::BoxCollider>("SphereCollider", player);
-    //sf::Vector2f textureSize = SpriteComp1->getTexture().getSize() * SpriteComp1->getSprite().getScale();
-    //colliderComp->setHalfSize(textureSize.x / 2.0f, textureSize.y / 2.0f);
-    colliderComp->createFixture(*rigidBodyComp->getBody());
-
-    auto TimedProjectileSpawner = app->createComponentAndAttach<ILM::TimedProjectileSpawner>("TimedProjectileSpawner", player);
-    auto fireball = new ILM::Projectile("Fireball");
-
-    auto fireballSprite = new MGE::SpriteRendererComponent("fireballSprite");
-    fireballSprite->loadAndSetTexture(resManager->getPathFromName("fireball"));
-    fireball->attachComponent(fireballSprite);
-
-    auto fireballRigidBody = app->createComponentAndAttach<MGE::RigidBodyComponent>("fireballRigidBody", fireball);
-    fireballRigidBody->setBodyType(b2BodyType::b2_staticBody);
-    fireball->attachComponent(fireballRigidBody);
-
-    b2FixtureDef fireballFixtureDef = b2FixtureDef();
-    fireballFixtureDef.isSensor = true;
-    sf::IntRect spriteSize = fireballSprite->getSprite().getTextureRect();
-    b2PolygonShape box{};
-    box.SetAsBox(spriteSize.width, spriteSize.height);
-    fireballFixtureDef.shape = &box;
-    auto fireballCollider = new MGE::BoxCollider("fireballCollider", fireballFixtureDef);
-
-    fireballCollider->createFixture(*fireballRigidBody->getBody());
-    fireball->attachComponent(fireballCollider);
-
-    TimedProjectileSpawner->addProjectile(fireball);
 
     auto circle2 = app->createEntity<MGE::AEntity>("circle2");
     auto SpriteComp2 = app->createComponentAndAttach<MGE::SpriteRendererComponent>("spriteRenderer2", circle2);

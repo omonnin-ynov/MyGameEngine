@@ -12,7 +12,7 @@ SpriteRendererComponent::SpriteRendererComponent(std::string name) : _texture(),
     _name = name;
 }
 
-SpriteRendererComponent::SpriteRendererComponent(std::string name, sf::Texture texture) : _texture(texture), _sprite(_texture)
+SpriteRendererComponent::SpriteRendererComponent(std::string name, sf::Texture texture) : _sprite(_texture), _texture(texture)
 {
     _name = name;
 }
@@ -23,7 +23,6 @@ void SpriteRendererComponent::Update(float deltaTime)
 
 void SpriteRendererComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    // A priori ça fonctionne avec le transform du sprite
     target.draw(_sprite, states);
 }
 
@@ -37,7 +36,6 @@ const sf::Texture& SpriteRendererComponent::getTexture()
     return _texture;
 }
 
-// Not confident that won't cause leaks...
 void SpriteRendererComponent::setTexture(sf::Texture texture)
 {
     _texture = texture;
@@ -49,7 +47,7 @@ void MGE::SpriteRendererComponent::loadAndSetTexture(std::string path)
     sf::Texture newTexture;
     if (!newTexture.loadFromFile(path))
     {
-        std::cerr << "Could not load texture" << std::endl;
+        std::cerr << "Could not load texture in spriteRendererComponent : " << path << "\n";
     }
     else {
         setTexture(newTexture);

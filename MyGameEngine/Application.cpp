@@ -79,17 +79,18 @@ void MGE::Application::update(float deltaTime)
 
     for (uint64_t ID : _toBeDeleted)
     {
-        auto compIterator = _components.find(ID);
-        if (compIterator != _components.end())
-        {
-            destroyComponent(compIterator->second);
-        }
         auto entityIterator = _entities.find(ID);
         if (entityIterator != _entities.end())
         {
             destroyEntity(entityIterator->second);
         }
+        auto compIterator = _components.find(ID);
+        if (compIterator != _components.end())
+        {
+            destroyComponent(compIterator->second);
+        }
     }
+    _toBeDeleted.clear();
 }
 
 void MGE::Application::handleInput()
@@ -206,7 +207,8 @@ void MGE::Application::registerEntityAndAttachedComponents(AEntity* entity)
     _entities[entity->getID()] = entity;
     for (AComponent* comp : *entity->getComponents())
     {
-        registerComponent(comp, entity);
+        _components[comp->getID()] = comp;
+        _compToEntityLink[comp->getID()] = entity->getID();
     }
 }
 
@@ -229,6 +231,7 @@ void MGE::Application::registerComponent(AComponent* comp, MGE::AEntity* parent)
 {
     _components[comp->getID()] = comp;
     _compToEntityLink[comp->getID()] = parent->getID();
+    parent->attachComponent(comp);
 }
 
 void MGE::Application::destroyComponent(MGE::AComponent* comp)

@@ -1,6 +1,5 @@
 #include "BoxCollider.h"
 #include "Application.h"
-#include "AComponent.h"
 
 MGE::BoxCollider::BoxCollider(std::string name) : ColliderComponent(name), _shape()
 {
