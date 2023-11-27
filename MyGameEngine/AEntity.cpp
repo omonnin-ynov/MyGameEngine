@@ -69,6 +69,11 @@ uint64_t MGE::AEntity::getID()
     return _ID;
 }
 
+std::string MGE::AEntity::getName() const
+{
+    return _name;
+}
+
 void MGE::AEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform.combine(this->getTransform());

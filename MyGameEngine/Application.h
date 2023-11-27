@@ -64,6 +64,8 @@ namespace MGE {
         void registerComponent(AComponent* comp, AEntity* parent);
         void markForDeletion(uint64_t ID);
 
+        void createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture texture, b2BodyType bodyType, bool isSensor);
+
         template <std::derived_from<AEntity> T>
         T* createEntity(std::string name)
         {

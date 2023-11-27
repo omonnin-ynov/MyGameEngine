@@ -93,6 +93,7 @@ void ILM::TimedProjectileSpawner::Update(float deltaTime)
         {
             info._clock.restart();
 
+            // TODO different projectile types (with LUA scripts?)
             // projectiles are always of projectile class or subclass and have a spriteRenderer, rigidBody and collider
             ILM::Projectile* newProj;
             /*switch (info._projectileType)
@@ -108,26 +109,7 @@ void ILM::TimedProjectileSpawner::Update(float deltaTime)
                 continue;
             }
 
-            auto projSprite = new MGE::SpriteRendererComponent(name + "Sprite");
-            projSprite->setTexture(info._texture);
-
-            auto projRigidBody = new MGE::RigidBodyComponent(name + "RigidBody");
-            projRigidBody->setBodyType(b2BodyType::b2_staticBody);
-
-            b2FixtureDef projFixtureDef = b2FixtureDef();
-            projFixtureDef.isSensor = true;
-            sf::IntRect spriteSize = projSprite->getSprite().getTextureRect();
-            b2PolygonShape box{};
-            box.SetAsBox(spriteSize.width, spriteSize.height);
-            projFixtureDef.shape = &box;
-
-            auto projCollider = new MGE::BoxCollider("fireballCollider", projFixtureDef);
-            projCollider->createFixture(*projRigidBody->getBody());
-
-            newProj->attachComponent(projSprite);
-            newProj->attachComponent(projRigidBody);
-            newProj->attachComponent(projCollider);
-
+            app->createSpriteAndPhysicsComponents(newProj, info._texture, b2_staticBody, true);
             // thankfully, adding elements to std::map does not invalidate iterators (from the Update implicit for loop)
             app->registerEntityAndAttachedComponents(newProj);
         }

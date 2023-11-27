@@ -11,6 +11,6 @@ namespace ILM
     public:
         ILMResourceManager();
 
-        MGE::AEntity* instantiatePlayer();
+        MGE::AEntity* instantiatePlayer(std::string name);
     };
 }

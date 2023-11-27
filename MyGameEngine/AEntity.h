@@ -25,6 +25,7 @@ namespace MGE {
         void detachComponent(AComponent* component);
 
         uint64_t getID();
+        std::string getName() const;
 
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

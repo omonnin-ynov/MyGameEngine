@@ -8,6 +8,10 @@ res:
     path: fireball.png
   - name: simonIdle
     path: simonIdle.png
+  - name: bat
+    path: bat.png
+  - name: skeleton
+    path: skeleton.png
 player:
   - name: simon
     sprite:
@@ -25,7 +29,30 @@ player:
         - name: fireball
           type: projectile
           textureName: fireball
-          speed: 20
+          speed: 20.0
           damage: 1
           duration: 2
-          baseSpawnRate: 1
+          baseSpawnRate: 0.05
+enemySpawner:
+  name: enemySpawner
+  spawnRateMod: 1
+  speedMod: 1
+  damageMod: 1
+  HPMod: 1
+  enemies:
+    - name: skeleton
+      type: basic
+      textureName: skeleton
+      speed: 10
+      damage: 1
+      HP: 2
+      baseSpawnRate: 1
+      scale: 2
+    - name: bat
+      type: basic
+      textureName: bat
+      speed: 15
+      damage: 1
+      HP: 1
+      baseSpawnRate: 1
+      scale: 2

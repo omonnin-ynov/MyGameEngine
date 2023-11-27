@@ -2,7 +2,11 @@
 #include <algorithm>
 #include "pch.h"
 #include "Application.h"
+
+#include "BoxCollider.h"
 #include "CameraComponent.h"
+#include "RigidBodyComponent.h"
+#include "SpriteRendererComponent.h"
 
 MGE::Application* MGE::Application::_instance = nullptr;
 
@@ -254,4 +258,35 @@ void MGE::Application::destroyComponent(MGE::AComponent* comp)
 void MGE::Application::markForDeletion(uint64_t ID)
 {
     _toBeDeleted.push_back(ID);
+}
+
+/// \brief create spriteRenderer, Collider and RigidBody components for the given entity.
+/// Since there are many such entities of this type in games, this is a straghtforward way to instantiate one.
+/// The collider size is set to the sprite size
+/// \param parent 
+/// \param name 
+/// \param textureName 
+/// \param bodyType 
+void MGE::Application::createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture texture,
+                                                        b2BodyType bodyType, bool isSensor)
+{
+    auto Sprite = new SpriteRendererComponent(parent->getName() + "Sprite");
+    Sprite->setTexture(texture);
+
+    auto RigidBody = new RigidBodyComponent(parent->getName() + "RigidBody");
+    RigidBody->setBodyType(bodyType);
+
+    b2FixtureDef fixtureDef = b2FixtureDef();
+    fixtureDef.isSensor = isSensor;
+    sf::IntRect spriteSize = Sprite->getSprite().getTextureRect();
+    b2PolygonShape box{};
+    box.SetAsBox(spriteSize.width / PhysicsSystem::WorldScale, spriteSize.height / PhysicsSystem::WorldScale);
+    fixtureDef.shape = &box;
+
+    auto Collider = new BoxCollider(parent->getName() + "Collider", fixtureDef);
+    Collider->createFixture(*RigidBody->getBody());
+
+    parent->attachComponent(Sprite);
+    parent->attachComponent(RigidBody);
+    parent->attachComponent(Collider);
 }

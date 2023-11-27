@@ -46,7 +46,7 @@ namespace ILM
         int getAmountMod() const;
         void setAmountMod(int amountMod);
 
-        virtual void Update(float deltaTime) override;
+        void Update(float deltaTime) override;
 
         void addProjectile(std::string projectileName, std::string projectileType, std::string texturePath, float speed, float damage, float
                            duration, float baseSpawnRate);

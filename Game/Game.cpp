@@ -20,7 +20,7 @@ int main()
 
     auto resManager = new ILM::ILMResourceManager();
 
-    MGE::AEntity* player = resManager->instantiatePlayer();
+    MGE::AEntity* player = resManager->instantiatePlayer("simon");
 
     // TODO rotation still incorrect
     player->setPosition(0.0f, -500.0f);
