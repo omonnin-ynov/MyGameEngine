@@ -75,6 +75,9 @@
     <ClInclude Include="YAMLConversions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="LuaScript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyGameEngine.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="PlayerInput.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaScript.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

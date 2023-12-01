@@ -18,7 +18,11 @@ void ILM::Enemy::Update(float deltaTime)
 {
     AEntity::Update(deltaTime);
 
-    this->move((_target->getPosition() - getPosition()) * _speed * deltaTime);
+    // get enemy direction
+    sf::Vector2f direction = _target->getPosition() - getPosition();
+    //normalize direction vector
+    float directionLen = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+    this->move((direction / directionLen) * _speed * deltaTime);
 }
 
 float ILM::Enemy::getSpeed() const

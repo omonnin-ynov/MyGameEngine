@@ -1,8 +1,11 @@
 #include "TimedProjectileSpawner.h"
 #include <format>
+
+#include "LuaProjectileMovement.h"
 #include "MyGameEngine/Application.h"
 #include "Projectile.h"
 #include "MyGameEngine/BoxCollider.h"
+#include "MyGameEngine/ResourceManager.h"
 #include "MyGameEngine/RigidBodyComponent.h"
 #include "MyGameEngine/SpriteRendererComponent.h"
 
@@ -110,6 +113,12 @@ void ILM::TimedProjectileSpawner::Update(float deltaTime)
             }
 
             app->createSpriteAndPhysicsComponents(newProj, info._texture, b2_staticBody, true);
+
+            auto luaScriptComp = new ILM::LuaProjectileMovement("LuaProjectileMovement");
+            // TODO perhaps load automatically in constructor?
+            luaScriptComp->SetScript(MGE::ResourceManager::getInstance()->getPathFromName("BouncyProjectile"));
+            newProj->attachComponent(luaScriptComp);
+
             // thankfully, adding elements to std::map does not invalidate iterators (from the Update implicit for loop)
             app->registerEntityAndAttachedComponents(newProj);
         }

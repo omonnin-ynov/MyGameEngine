@@ -2,7 +2,6 @@
 #include <algorithm>
 #include "pch.h"
 #include "Application.h"
-
 #include "BoxCollider.h"
 #include "CameraComponent.h"
 #include "RigidBodyComponent.h"
@@ -25,6 +24,10 @@ MGE::Application* MGE::Application::getInstance()
 {
     if (!_instance) {
         _instance = new Application();
+        std::random_device rd;
+        std::seed_seq sd{ rd(), rd(), rd(), rd() };
+        _instance->_rng = std::mt19937(sd);
+        std::cout << _instance->_rng.min() << _instance->_rng.max();
     }
     return _instance;
 }
@@ -199,6 +202,11 @@ MGE::AEntity* MGE::Application::getParentEntity(AComponent* comp)
         return nullptr;
     }
     return nullptr;
+}
+
+int MGE::Application::getRand()
+{
+    return _rng();
 }
 
 void MGE::Application::registerEntity(AEntity* entity)

@@ -19,6 +19,7 @@ namespace ILM
         };
 
     protected:
+        // TODO load script in here
         float _spawnRateMod;
         float _speedMod;
         float _damageMod;

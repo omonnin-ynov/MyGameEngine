@@ -1,9 +1,35 @@
 #include "EnemySpawner.h"
 
 #include <iostream>
-
 #include "Enemy.h"
 #include "MyGameEngine/Application.h"
+
+sf::Vector2f ILM::EnemySpawner::sampleRandomPointOnRectPerimeter(sf::Vector2f& rectangle)
+{
+
+    // Unfold the rectangle in a line starting from the top-left corner
+    float rectangleLength = rectangle.x * 2 + rectangle.y * 2;
+    // pick a random point on the line
+    // why is there no random float function
+    int pointOnRectangle = MGE::Application::getInstance()->getInstance()->getRand() % static_cast<int>(rectangleLength);
+
+    // get back the position on the rectangle
+    if (pointOnRectangle < rectangle.x)
+    {
+        return { static_cast<float>(pointOnRectangle), 0 };
+    }
+    pointOnRectangle -= rectangle.x;
+    if (pointOnRectangle < rectangle.y)
+    {
+        return { rectangle.x, static_cast<float>(pointOnRectangle) };
+    }
+    pointOnRectangle -= rectangle.y;
+    if (pointOnRectangle < rectangle.x)
+    {
+        return { static_cast<float>(pointOnRectangle), rectangle.y };
+    }
+    else return {0, static_cast<float>(pointOnRectangle) - rectangle.x};
+}
 
 ILM::EnemySpawner::EnemySpawner(std::string name) : _spawnRateMod(1), _speedMod(1), _damageMod(1), _hpMod()
 {
@@ -69,8 +95,13 @@ void ILM::EnemySpawner::Update(float deltaTime)
             enemyInfo._clock.restart();
 
             auto newEnemy = new Enemy(name, enemyInfo._speed * _speedMod, enemyInfo._hp * _hpMod, enemyInfo._damage * _damageMod, app->getParentEntity(this));
-            //TODO w.r.t. screen position
-            newEnemy->setPosition(app->getParentEntity(this)->getPosition());
+
+            // Get player position and viewport size to spawn enemies slightly outside the viewport
+            sf::Vector2f spawnRectangle = app->getActiveCamera()->getCameraViewportSize() * 1.1f;
+            sf::Vector2f spawnOffset = sampleRandomPointOnRectPerimeter(spawnRectangle);
+            spawnOffset = { spawnOffset.x - (spawnRectangle.x / 2.0f), spawnOffset.y - (spawnRectangle.y / 2.0f)};
+            sf::Vector2f enemyPosition = app->getParentEntity(this)->getPosition() + spawnOffset;
+            newEnemy->setPosition(enemyPosition);
 
             app->createSpriteAndPhysicsComponents(newEnemy, enemyInfo._texture, b2_staticBody, true);
             // thankfully, adding elements to std::map does not invalidate iterators (from the Update implicit for loop)

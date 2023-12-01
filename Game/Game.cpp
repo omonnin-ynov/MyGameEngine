@@ -9,6 +9,7 @@
 #include <MyGameEngine/CircleComponent.h>
 #include <MyGameEngine/CameraComponent.h>
 #include "GameManager.h"
+#include "LuaProjectileMovement.h"
 #include "Projectile.h"
 #include "MyGameEngine/PlayerInput.h"
 #include "TimedProjectileSpawner.h"
@@ -37,8 +38,7 @@ int main()
 
     auto colliderComp2 = app->createComponentAndAttach<MGE::BoxCollider>("SphereCollider2", circle2);
     colliderComp2->setHalfSize(12.0f, 4.0f);
-    colliderComp2->createFixture(*rigidBodyComp2->getBody());
-    
+    colliderComp2->createFixture(*rigidBodyComp2->getBody());    
 
     auto camera = app->createComponentAndAttach<MGE::CameraComponent>("Camera", player);
     camera->setCameraRotationFollowsParent(false);

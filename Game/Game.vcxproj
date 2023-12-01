@@ -155,6 +155,7 @@
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="LuaProjectileMovement.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="TimedProjectileSpawner.cpp" />
   </ItemGroup>
@@ -163,12 +164,26 @@
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="LuaProjectileMovement.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="TimedProjectileSpawner.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.yaml">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
+    <_EmbedManagedResourceFile Include="res\BouncyProjectile.lua">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </_EmbedManagedResourceFile>
+    <None Include="res\dkjson.lua">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="res\vscode-debuggee.lua">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </None>
   </ItemGroup>
   <ItemGroup>

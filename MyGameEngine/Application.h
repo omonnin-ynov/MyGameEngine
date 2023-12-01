@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <ranges>
-
+#include <random>
 #include "PhysicsSystem.h"
 #include "AEntity.h"
 #include "CameraComponent.h"
@@ -13,6 +13,9 @@ namespace MGE {
     protected:
         
         uint64_t _IDCounter;
+        // std::rand c'est de la merde
+        std::mt19937 _rng;
+
         static Application* _instance;
         // Should be public?
         PhysicsSystem _physics;
@@ -25,6 +28,7 @@ namespace MGE {
         sf::RenderWindow* _window;
         bool _shouldExit;
         CameraComponent* _activeCameraComponent;
+
         Application();
 
     public:
@@ -59,6 +63,7 @@ namespace MGE {
 
         AEntity* getParentEntity(AComponent* comp);
 
+        int getRand();
         void registerEntity(AEntity* entity);
         void registerEntityAndAttachedComponents(AEntity* entity);
         void registerComponent(AComponent* comp, AEntity* parent);

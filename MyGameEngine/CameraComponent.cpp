@@ -27,6 +27,11 @@ sf::View* MGE::CameraComponent::getView()
     return &_camera;
 }
 
+sf::Vector2f MGE::CameraComponent::getCameraViewportSize()
+{
+    return _camera.getSize();
+}
+
 void MGE::CameraComponent::setCameraZoom(float halfSizeX, float halfSizeY)
 {
     _camera.setSize(halfSizeX, halfSizeY);

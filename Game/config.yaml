@@ -12,6 +12,8 @@ res:
     path: bat.png
   - name: skeleton
     path: skeleton.png
+  - name: BouncyProjectile
+    path: BouncyProjectile.lua
 player:
   - name: simon
     sprite:
@@ -43,15 +45,15 @@ enemySpawner:
     - name: skeleton
       type: basic
       textureName: skeleton
-      speed: 10
+      speed: 100
       damage: 1
       HP: 2
       baseSpawnRate: 1
       scale: 2
     - name: bat
       type: basic
-      textureName: bat
-      speed: 15
+      textureName: skeleton
+      speed: 150
       damage: 1
       HP: 1
       baseSpawnRate: 1

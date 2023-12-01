@@ -17,6 +17,7 @@ namespace MGE {
 
         sf::View* getView();
 
+        sf::Vector2f getCameraViewportSize();
         void setCameraZoom(float halfSizeX, float halfSizeY);
         void setCameraRotation(float angle);
         void setViewport(float x, float y, float z, float w);

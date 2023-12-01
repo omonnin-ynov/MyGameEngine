@@ -23,6 +23,7 @@ namespace ILM
         float _damageMod;
         float _hpMod;
         std::map<std::string, EnemyInfo> _enemies;
+        sf::Vector2f sampleRandomPointOnRectPerimeter(sf::Vector2f& rectangle);
 
     public:
         EnemySpawner(std::string name);

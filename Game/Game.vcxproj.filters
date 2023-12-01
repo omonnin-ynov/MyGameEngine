@@ -16,6 +16,9 @@
     <Filter Include="Resource Files\images">
       <UniqueIdentifier>{74b5cc5b-64c6-49ae-bd37-df9cb5a49298}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\LUA Scripts">
+      <UniqueIdentifier>{ece7ee55-da96-4f6d-af81-c02d9ef60668}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -34,6 +37,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaProjectileMovement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,9 +62,18 @@
     <ClInclude Include="EnemySpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LuaProjectileMovement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="config.yaml" />
+    <None Include="res\vscode-debuggee.lua">
+      <Filter>Resource Files\LUA Scripts</Filter>
+    </None>
+    <None Include="res\dkjson.lua">
+      <Filter>Resource Files\LUA Scripts</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\awesomeface.png">
@@ -79,5 +94,10 @@
     <Image Include="res\skeleton.png">
       <Filter>Resource Files\images</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <_EmbedManagedResourceFile Include="res\BouncyProjectile.lua">
+      <Filter>Resource Files\LUA Scripts</Filter>
+    </_EmbedManagedResourceFile>
   </ItemGroup>
 </Project>
