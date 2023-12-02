@@ -1,29 +1,48 @@
 #include "Collision.h"
 
-MGE::Collision::Collision() : _selfComp(), _otherComp()
+
+MGE::Collision::Collision()
 {
 }
 
-MGE::Collision::Collision(b2Body* selfComp, b2Body* otherComp) : _selfComp(selfComp), _otherComp(otherComp)
+MGE::Collision::Collision(b2Body* selfb2_body, RigidBodyComponent* self_rigid_body, AEntity* self_parent, b2Body* otherb2_body,
+	RigidBodyComponent* other_rigid_body, AEntity* other_parent)
+	: _selfb2Body(selfb2_body),
+	_selfRigidBody(self_rigid_body),
+	_selfParent(self_parent),
+	_otherb2Body(otherb2_body),
+	_otherRigidBody(other_rigid_body),
+	_otherParent(other_parent)
 {
 }
 
-b2Body* MGE::Collision::getSelfComp()
+
+b2Body* MGE::Collision::getSelfb2Body() const
 {
-    return _selfComp;
+	return _selfb2Body;
 }
 
-b2Body* MGE::Collision::getOtherComp()
+MGE::RigidBodyComponent* MGE::Collision::getSelfRigidBody() const
 {
-    return _otherComp;
+	return _selfRigidBody;
 }
 
-void MGE::Collision::setSelfComp(b2Body* comp)
+MGE::AEntity* MGE::Collision::getSelfParent() const
 {
-    _selfComp = comp;
+	return _selfParent;
 }
 
-void MGE::Collision::setOtherComp(b2Body* comp)
+b2Body* MGE::Collision::getOtherb2Body() const
 {
-    _otherComp = comp;
+	return _otherb2Body;
+}
+
+MGE::RigidBodyComponent* MGE::Collision::getOtherRigidBody() const
+{
+	return _otherRigidBody;
+}
+
+MGE::AEntity* MGE::Collision::getOtherParent() const
+{
+	return _otherParent;
 }

@@ -1,10 +1,5 @@
 #include "Projectile.h"
-#include <iostream>
-#include "box2d/b2_math.h"
 #include "MyGameEngine/Application.h"
-#include "MyGameEngine/BoxCollider.h"
-#include "MyGameEngine/RigidBodyComponent.h"
-#include "MyGameEngine/SpriteRendererComponent.h"
 
 float ILM::Projectile::getDamage() const
 {
@@ -41,12 +36,13 @@ ILM::Projectile::Projectile(std::string name) : AEntity(name), _speed(200.0f), _
     timer.restart();
 }
 
-ILM::Projectile::Projectile(const std::string& name, float speed, float damage, float areaMod, float duration)
+ILM::Projectile::Projectile(const std::string& name, float speed, float damage, float areaMod, float duration, int hp)
     : AEntity(name),
     _speed(speed),
     _damage(damage),
     _areaMod(areaMod),
-    _duration(duration)
+    _duration(duration),
+	_hp(hp)
 {
     timer.restart();
 }

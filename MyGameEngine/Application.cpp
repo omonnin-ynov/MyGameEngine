@@ -9,25 +9,30 @@
 
 MGE::Application* MGE::Application::_instance = nullptr;
 
+std::map<b2Body*, MGE::RigidBodyComponent*>* MGE::Application::getb2BodyToComp()
+{
+	return &_b2BodyToComp;
+}
+
 /// <summary>
 /// Create Application with IDCounter = 0 and empty list of entities
 /// WARNING: window is nullptr before InitalizeWindow
 /// </summary>
-MGE::Application::Application() : _entities(), _components(), _physics(b2Vec2(0.0f, 300.0f)), _compToEntityLink()
+MGE::Application::Application() : _entities(), _components(), _physics(b2Vec2(0.0f, 0.0f)), _compToEntityLink(), _luaSystem()
 {
     _IDCounter = 0;
     _window = nullptr;
     _shouldExit = false;
+
+    std::random_device rd;
+    std::seed_seq sd{ rd(), rd(), rd(), rd() };
+    _rng = std::mt19937(sd);
 }
 
 MGE::Application* MGE::Application::getInstance()
 {
     if (!_instance) {
         _instance = new Application();
-        std::random_device rd;
-        std::seed_seq sd{ rd(), rd(), rd(), rd() };
-        _instance->_rng = std::mt19937(sd);
-        std::cout << _instance->_rng.min() << _instance->_rng.max();
     }
     return _instance;
 }
@@ -144,6 +149,11 @@ MGE::PhysicsSystem& MGE::Application::getPhysics()
 b2World* MGE::Application::getWorld()
 {
     return _physics.getWorld();
+}
+
+MGE::LuaSystem* MGE::Application::getLua()
+{
+    return &_luaSystem;
 }
 
 sf::RenderWindow* MGE::Application::getWindow()
@@ -269,14 +279,14 @@ void MGE::Application::markForDeletion(uint64_t ID)
 }
 
 /// \brief create spriteRenderer, Collider and RigidBody components for the given entity.
-/// Since there are many such entities of this type in games, this is a straghtforward way to instantiate one.
+/// Since there are many such entities of this type in games, this is a straightforward way to instantiate one.
 /// The collider size is set to the sprite size
 /// \param parent 
 /// \param name 
 /// \param textureName 
 /// \param bodyType 
 void MGE::Application::createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture texture,
-                                                        b2BodyType bodyType, bool isSensor)
+                                                        b2BodyType bodyType, bool isSensor, uint16 collisionGroup, uint16 collisionMask)
 {
     auto Sprite = new SpriteRendererComponent(parent->getName() + "Sprite");
     Sprite->setTexture(texture);
@@ -286,6 +296,8 @@ void MGE::Application::createSpriteAndPhysicsComponents(AEntity* parent, sf::Tex
 
     b2FixtureDef fixtureDef = b2FixtureDef();
     fixtureDef.isSensor = isSensor;
+    fixtureDef.filter.categoryBits = collisionGroup;
+    fixtureDef.filter.maskBits = collisionMask;
     sf::IntRect spriteSize = Sprite->getSprite().getTextureRect();
     b2PolygonShape box{};
     box.SetAsBox(spriteSize.width / PhysicsSystem::WorldScale, spriteSize.height / PhysicsSystem::WorldScale);

@@ -4,11 +4,13 @@
 MGE::RigidBodyComponent::RigidBodyComponent(std::string name) : _bodyDef()
 {
     _body = Application::getInstance()->getWorld()->CreateBody(&_bodyDef);
+    (*Application::getInstance()->getb2BodyToComp())[_body] = this;
 }
 
 MGE::RigidBodyComponent::~RigidBodyComponent()
 {
-    MGE::Application::getInstance()->getWorld()->DestroyBody(_body);
+    (*Application::getInstance()->getb2BodyToComp()).erase(_body);
+    Application::getInstance()->getWorld()->DestroyBody(_body);
 }
 
 b2Body* MGE::RigidBodyComponent::getBody()

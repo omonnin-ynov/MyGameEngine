@@ -11,13 +11,14 @@ namespace ILM
         float _damage;
         float _areaMod;
         float _duration;
+        int _hp;
         // Self-destruct timer, used as spawn timer if projectile registered in TimedProjectileSpawner
         sf::Clock timer;
 
     public:
         Projectile(std::string name);
 
-        Projectile(const std::string& name, float speed, float damage, float areaMod, float duration);
+        Projectile(const std::string& name, float speed, float damage, float areaMod, float duration, int hp);
 
         void Update(float deltaTime) override;
 

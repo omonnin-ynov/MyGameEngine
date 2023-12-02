@@ -7,113 +7,126 @@
 #include "PhysicsSystem.h"
 #include "AEntity.h"
 #include "CameraComponent.h"
+#include "LuaSystem.h"
 
-namespace MGE {
-    class Application {
-    protected:
-        
-        uint64_t _IDCounter;
-        // std::rand c'est de la merde
-        std::mt19937 _rng;
+namespace MGE
+{
+	class RigidBodyComponent;
 
-        static Application* _instance;
-        // Should be public?
-        PhysicsSystem _physics;
+	class Application
+	{
+	protected:
+		uint64_t _IDCounter;
+		// std::rand c'est de la merde
+		std::mt19937 _rng;
 
-        std::map<uint64_t, AEntity*> _entities;
-        std::map<uint64_t, AComponent*> _components;
-        std::map<uint64_t, uint64_t> _compToEntityLink;
-        std::vector<uint64_t> _toBeDeleted;
+		static Application* _instance;
+		PhysicsSystem _physics;
+		LuaSystem _luaSystem;
 
-        sf::RenderWindow* _window;
-        bool _shouldExit;
-        CameraComponent* _activeCameraComponent;
+		// TODO if there's time, make sure the first 3 maps can't be modified by unintended means
+		std::map<uint64_t, AEntity*> _entities;
+		std::map<uint64_t, AComponent*> _components;
+		std::map<uint64_t, uint64_t> _compToEntityLink;
+		std::map<b2Body*, RigidBodyComponent*> _b2BodyToComp;
+		
 
-        Application();
+	protected:
+		std::vector<uint64_t> _toBeDeleted;
 
-    public:
+		sf::RenderWindow* _window;
+		bool _shouldExit;
+		CameraComponent* _activeCameraComponent;
 
-        static Application* getInstance();
+		Application();
 
-        void start();
+	public:
+		static Application* getInstance();
 
-        void initalizeWindow(int x, int y);
+		void start();
 
-        void update(float deltaTime);
+		void initalizeWindow(int x, int y);
 
-        void handleInput();
+		void update(float deltaTime);
 
-        uint64_t GenerateID();
+		void handleInput();
 
-        std::map<uint64_t, AEntity*>* getEntities();
-        std::map<uint64_t, AComponent*>* getComponents();
+		uint64_t GenerateID();
 
-        PhysicsSystem& getPhysics();
-        b2World* getWorld();
+		std::map<uint64_t, AEntity*>* getEntities();
+		std::map<uint64_t, AComponent*>* getComponents();
+		// I'm ok with adding an extra map to keep track of, bc only the RigidBodyComponent will ever modify it
+		// and it makes collisions much more efficient
+		std::map<b2Body*, RigidBodyComponent*>* getb2BodyToComp();
 
-        sf::RenderWindow* getWindow();
+		PhysicsSystem& getPhysics();
+		b2World* getWorld();
+		LuaSystem* getLua();
 
-        MGE::CameraComponent* getActiveCamera();
+		sf::RenderWindow* getWindow();
 
-        void setActiveCamera(CameraComponent* cameraComp);
+		CameraComponent* getActiveCamera();
 
-        AEntity* getEntityFromID(uint64_t ID);
+		void setActiveCamera(CameraComponent* cameraComp);
 
-        AComponent* getComponentFromID(uint64_t ID);
+		AEntity* getEntityFromID(uint64_t ID);
 
-        AEntity* getParentEntity(AComponent* comp);
+		AComponent* getComponentFromID(uint64_t ID);
 
-        int getRand();
-        void registerEntity(AEntity* entity);
-        void registerEntityAndAttachedComponents(AEntity* entity);
-        void registerComponent(AComponent* comp, AEntity* parent);
-        void markForDeletion(uint64_t ID);
+		AEntity* getParentEntity(AComponent* comp);
 
-        void createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture texture, b2BodyType bodyType, bool isSensor);
+		int getRand();
+		void registerEntity(AEntity* entity);
+		void registerEntityAndAttachedComponents(AEntity* entity);
+		void registerComponent(AComponent* comp, AEntity* parent);
+		void markForDeletion(uint64_t ID);
 
-        template <std::derived_from<AEntity> T>
-        T* createEntity(std::string name)
-        {
-            T* newEntity = new T(name);
-            _entities[newEntity->getID()] = newEntity;
-            return newEntity;
-        }
+		void createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture texture, b2BodyType bodyType, bool isSensor,
+		                                      uint16 collisionGroup, uint16 collisionMask);
 
-        void destroyEntity(AEntity* entity);        
+		template <std::derived_from<AEntity> T>
+		T* createEntity(std::string name)
+		{
+			T* newEntity = new T(name);
+			_entities[newEntity->getID()] = newEntity;
+			return newEntity;
+		}
 
-        /// \brief adds all components of type T to result vector passed in param
-        /// \tparam T the type to find
-        /// \param result your vector + all registered components of type T
-        template <std::derived_from<AComponent> T>
-        void getComponentsOfType(std::vector<T*>* result)
-        {
-            for (auto comp : _components | std::views::values)
-            {
-                if (T* testComp = dynamic_cast<T*>(comp))
-                {
-                    result->push_back(testComp);
-                }
-            }
-        }
+		void destroyEntity(AEntity* entity);
 
-        template <std::derived_from<AComponent> T>
-        T* createComponent(std::string name)
-        {
-            T* newComp = new T(name);
-            _components[newComp->getID()] = newComp;
-            return newComp;
-        }
+		/// \brief adds all components of type T to result vector passed in param
+		/// \tparam T the type to find
+		/// \param result your vector + all registered components of type T
+		template <std::derived_from<AComponent> T>
+		void getComponentsOfType(std::vector<T*>* result)
+		{
+			for (auto comp : _components | std::views::values)
+			{
+				if (T* testComp = dynamic_cast<T*>(comp))
+				{
+					result->push_back(testComp);
+				}
+			}
+		}
 
-        template <std::derived_from<AComponent> T>
-        T* createComponentAndAttach(std::string name, MGE::AEntity* entity)
-        {
-            T* newComp = new T(name);
-            _components[newComp->getID()] = newComp;
-            _compToEntityLink[newComp->getID()] = entity->getID();
-            entity->attachComponent(newComp);
-            return newComp;
-        }
+		template <std::derived_from<AComponent> T>
+		T* createComponent(std::string name)
+		{
+			T* newComp = new T(name);
+			_components[newComp->getID()] = newComp;
+			return newComp;
+		}
 
-        void destroyComponent(AComponent* comp);
-    };
+		template <std::derived_from<AComponent> T>
+		T* createComponentAndAttach(std::string name, AEntity* entity)
+		{
+			T* newComp = new T(name);
+			_components[newComp->getID()] = newComp;
+			_compToEntityLink[newComp->getID()] = entity->getID();
+			entity->attachComponent(newComp);
+			return newComp;
+		}
+
+		void destroyComponent(AComponent* comp);
+	};
 }

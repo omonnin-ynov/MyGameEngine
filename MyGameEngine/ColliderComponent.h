@@ -3,7 +3,7 @@
 #include <box2d/box2d.h>
 
 namespace MGE {
-    class ColliderComponent :
+    class ColliderComponent:
         public AComponent
     {
     protected:

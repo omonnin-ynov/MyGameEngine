@@ -4,33 +4,6 @@
 #include "Enemy.h"
 #include "MyGameEngine/Application.h"
 
-sf::Vector2f ILM::EnemySpawner::sampleRandomPointOnRectPerimeter(sf::Vector2f& rectangle)
-{
-
-    // Unfold the rectangle in a line starting from the top-left corner
-    float rectangleLength = rectangle.x * 2 + rectangle.y * 2;
-    // pick a random point on the line
-    // why is there no random float function
-    int pointOnRectangle = MGE::Application::getInstance()->getInstance()->getRand() % static_cast<int>(rectangleLength);
-
-    // get back the position on the rectangle
-    if (pointOnRectangle < rectangle.x)
-    {
-        return { static_cast<float>(pointOnRectangle), 0 };
-    }
-    pointOnRectangle -= rectangle.x;
-    if (pointOnRectangle < rectangle.y)
-    {
-        return { rectangle.x, static_cast<float>(pointOnRectangle) };
-    }
-    pointOnRectangle -= rectangle.y;
-    if (pointOnRectangle < rectangle.x)
-    {
-        return { static_cast<float>(pointOnRectangle), rectangle.y };
-    }
-    else return {0, static_cast<float>(pointOnRectangle) - rectangle.x};
-}
-
 ILM::EnemySpawner::EnemySpawner(std::string name) : _spawnRateMod(1), _speedMod(1), _damageMod(1), _hpMod()
 {
 }
@@ -95,6 +68,7 @@ void ILM::EnemySpawner::Update(float deltaTime)
             enemyInfo._clock.restart();
 
             auto newEnemy = new Enemy(name, enemyInfo._speed * _speedMod, enemyInfo._hp * _hpMod, enemyInfo._damage * _damageMod, app->getParentEntity(this));
+            newEnemy->setScale(enemyInfo._scale, enemyInfo._scale);
 
             // Get player position and viewport size to spawn enemies slightly outside the viewport
             sf::Vector2f spawnRectangle = app->getActiveCamera()->getCameraViewportSize() * 1.1f;
@@ -103,11 +77,38 @@ void ILM::EnemySpawner::Update(float deltaTime)
             sf::Vector2f enemyPosition = app->getParentEntity(this)->getPosition() + spawnOffset;
             newEnemy->setPosition(enemyPosition);
 
-            app->createSpriteAndPhysicsComponents(newEnemy, enemyInfo._texture, b2_staticBody, true);
+            app->createSpriteAndPhysicsComponents(newEnemy, enemyInfo._texture, b2_staticBody, true, 0x0004, 0x0003);
             // thankfully, adding elements to std::map does not invalidate iterators (from the Update implicit for loop)
             app->registerEntityAndAttachedComponents(newEnemy);
         }
     }
+}
+
+sf::Vector2f ILM::EnemySpawner::sampleRandomPointOnRectPerimeter(sf::Vector2f& rectangle)
+{
+
+    // Unfold the rectangle in a line starting from the top-left corner
+    float rectangleLength = rectangle.x * 2 + rectangle.y * 2;
+    // pick a random point on the line
+    // why is there no random float function
+    int pointOnRectangle = MGE::Application::getInstance()->getInstance()->getRand() % static_cast<int>(rectangleLength);
+
+    // get back the position on the rectangle
+    if (pointOnRectangle < rectangle.x)
+    {
+        return { static_cast<float>(pointOnRectangle), 0 };
+    }
+    pointOnRectangle -= rectangle.x;
+    if (pointOnRectangle < rectangle.y)
+    {
+        return { rectangle.x, static_cast<float>(pointOnRectangle) };
+    }
+    pointOnRectangle -= rectangle.y;
+    if (pointOnRectangle < rectangle.x)
+    {
+        return { static_cast<float>(pointOnRectangle), rectangle.y };
+    }
+    else return {0, static_cast<float>(pointOnRectangle) - rectangle.x};
 }
 
 void ILM::EnemySpawner::addEnemy(std::string enemyName, std::string enemyType, std::string texturePath, float speed, float HP, float damage,

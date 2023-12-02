@@ -162,7 +162,6 @@
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="LuaProjectileMovement.h" />
     <ClInclude Include="Projectile.h" />

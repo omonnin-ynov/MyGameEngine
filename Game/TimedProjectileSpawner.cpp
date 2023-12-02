@@ -96,15 +96,15 @@ void ILM::TimedProjectileSpawner::Update(float deltaTime)
         {
             info._clock.restart();
 
-            // TODO different projectile types (with LUA scripts?)
-            // projectiles are always of projectile class or subclass and have a spriteRenderer, rigidBody and collider
+            // TODO different projectile types with LUA scripts
             ILM::Projectile* newProj;
             /*switch (info._projectileType)
             {
             case "projectile":*/
-                newProj = new Projectile(name, info._speed * _speedMod, info._damage * _damageMod, _areaMod, info._duration *_durationMod);
+                newProj = new Projectile(name, info._speed * _speedMod, info._damage * _damageMod, _areaMod, info._duration *_durationMod, info._hp);
                 newProj->setPosition(app->getParentEntity(this)->getPosition());
                 newProj->setRotation(std::rand() % 361);
+                newProj->setScale(info._scale, info._scale);
             //}
             if (!newProj)
             {
@@ -112,11 +112,9 @@ void ILM::TimedProjectileSpawner::Update(float deltaTime)
                 continue;
             }
 
-            app->createSpriteAndPhysicsComponents(newProj, info._texture, b2_staticBody, true);
+            app->createSpriteAndPhysicsComponents(newProj, info._texture, b2_dynamicBody, true, 0x0002, 0x0004);
 
             auto luaScriptComp = new ILM::LuaProjectileMovement("LuaProjectileMovement");
-            // TODO perhaps load automatically in constructor?
-            luaScriptComp->SetScript(MGE::ResourceManager::getInstance()->getPathFromName("BouncyProjectile"));
             newProj->attachComponent(luaScriptComp);
 
             // thankfully, adding elements to std::map does not invalidate iterators (from the Update implicit for loop)
@@ -126,7 +124,7 @@ void ILM::TimedProjectileSpawner::Update(float deltaTime)
 }
 
 void ILM::TimedProjectileSpawner::addProjectile(std::string projectileName, std::string projectileType,
-                                                std::string texturePath, float speed, float damage, float duration, float baseSpawnRate)
+                                                std::string texturePath, float speed, float damage, float duration, int hp, float scale, float baseSpawnRate)
 {
     if (!_projectiles.contains(projectileName))
     {
@@ -136,7 +134,7 @@ void ILM::TimedProjectileSpawner::addProjectile(std::string projectileName, std:
             std::cout << "warning: Could not load texture in timedProjectileSpawner::addProjectile : " << texturePath << "\n";
             return;
         }
-        _projectiles[projectileName] = ProjectileInfo{ projectileType, texture, speed, damage, duration, baseSpawnRate };
+        _projectiles[projectileName] = ProjectileInfo{ projectileType, texture, speed, damage, duration, hp, scale, baseSpawnRate };
     }
     else std::cout << "warning: projectile with same name already exists in projectile spawner\n";
 }

@@ -56,16 +56,16 @@ void MGE::SpriteRendererComponent::loadAndSetTexture(std::string path)
 
 void MGE::SpriteRendererComponent::BeginCollision(Collision collision)
 {
-    auto bodyA = collision.getOtherComp();
-    auto bodyB = collision.getOtherComp();
+    auto bodyA = collision.getSelfb2Body();
+    auto bodyB = collision.getOtherb2Body();
     std::cout << std::format("Collision Begin: self: {}, bodyA: ({}, {}), bodyB: ({}, {}) \n", 
         _name, bodyA->GetPosition().x, bodyA->GetPosition().y, bodyB->GetPosition().x, bodyB->GetPosition().y);
 }
 
 void MGE::SpriteRendererComponent::EndCollision(Collision collision)
 {
-    auto bodyA = collision.getOtherComp();
-    auto bodyB = collision.getOtherComp();
+    auto bodyA = collision.getSelfb2Body();
+    auto bodyB = collision.getOtherb2Body();
     std::cout << std::format("Collision End: self: {}, bodyA: ({}, {}), bodyB: ({}, {}) \n",
         _name, bodyA->GetPosition().x, bodyA->GetPosition().y, bodyB->GetPosition().x, bodyB->GetPosition().y);
 }

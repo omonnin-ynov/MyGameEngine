@@ -1,5 +1,7 @@
 #include "ColliderComponent.h"
 
+#include "Application.h"
+
 void Update() {
 
 }
@@ -10,7 +12,7 @@ MGE::ColliderComponent::ColliderComponent(std::string name) : AComponent(name), 
 
 
 void MGE::ColliderComponent::createFixture(b2Body& body)
-{  
+{
     body.CreateFixture(&_fixtureDef);
 }
 

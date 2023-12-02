@@ -34,6 +34,8 @@ player:
           speed: 20.0
           damage: 1
           duration: 2
+          hp: 2
+          scale: 0.75
           baseSpawnRate: 0.05
 enemySpawner:
   name: enemySpawner

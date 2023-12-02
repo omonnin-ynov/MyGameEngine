@@ -3,9 +3,10 @@
 #include "Projectile.h"
 #include "MyGameEngine/Application.h"
 
-ILM::LuaProjectileMovement::LuaProjectileMovement(std::string name) : LuaScript(name)
+ILM::LuaProjectileMovement::LuaProjectileMovement(std::string name) : LuaScript(name), _luaState(MGE::Application::getInstance()->getLua()->getLuaState())
 {
-    
+    // I'm not sure if lua_state is ever going to be invalidated, I assume not
+    // If it does turn out to be the case, I can always fetch it from application->getLua
 }
 
 void ILM::LuaProjectileMovement::Update(float deltaTime)

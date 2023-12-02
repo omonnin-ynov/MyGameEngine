@@ -14,12 +14,13 @@ namespace ILM
             float _speed;
             float _damage;
             float _duration;
+            int _hp;
+            float _scale;
             float _baseSpawnRate;
             sf::Clock _clock;
         };
 
     protected:
-        // TODO load script in here
         float _spawnRateMod;
         float _speedMod;
         float _damageMod;
@@ -50,7 +51,7 @@ namespace ILM
         void Update(float deltaTime) override;
 
         void addProjectile(std::string projectileName, std::string projectileType, std::string texturePath, float speed, float damage, float
-                           duration, float baseSpawnRate);
+                           duration, int hp, float scale, float baseSpawnRate);
         void clearProjectiles();
         void removeProjectile(std::string projectileName);
     };

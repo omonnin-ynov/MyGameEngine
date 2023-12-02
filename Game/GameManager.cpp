@@ -11,8 +11,6 @@ ILM::ILMResourceManager::ILMResourceManager()
 
 MGE::AEntity* ILM::ILMResourceManager::instantiatePlayer(std::string name)
 {
-    //TODO this goes in a template unmarshal function
-
     auto app = MGE::Application::getInstance();
     MGE::AEntity* playerEntity{};
     for (YAML::Node player : _config["player"])
@@ -22,8 +20,9 @@ MGE::AEntity* ILM::ILMResourceManager::instantiatePlayer(std::string name)
             playerEntity = app->createEntity<MGE::AEntity>(player["name"].as<std::string>());
             // Get player Sprite
             auto spriteNode = player["sprite"];
-            auto playerSprite = app->createComponentAndAttach<MGE::SpriteRendererComponent>(spriteNode["name"].as<std::string>(), playerEntity);
-            playerSprite->loadAndSetTexture(getPathFromName(spriteNode["textureName"].as<std::string>()));
+            sf::Texture playerTexture;
+            playerTexture.loadFromFile(getPathFromName(spriteNode["textureName"].as<std::string>()));
+            app->createSpriteAndPhysicsComponents(playerEntity, playerTexture, b2_dynamicBody, false, 0x0001, 0x0004);
 
             auto projectileSpawnerNode = player["projectileSpawner"];
             auto PSName = projectileSpawnerNode["name"].as<std::string>();
@@ -46,10 +45,12 @@ MGE::AEntity* ILM::ILMResourceManager::instantiatePlayer(std::string name)
                     projectileInfo["speed"].as<float>(),
                     projectileInfo["damage"].as<float>(),
                     projectileInfo["duration"].as<float>(),
+                    projectileInfo["hp"].as<int>(),
+                    projectileInfo["scale"].as<float>(),
                     projectileInfo["baseSpawnRate"].as<float>());
             }
 
-            app->registerComponent(projectileSpawner, playerEntity);
+            playerEntity->attachComponent(projectileSpawner);
         }
     }
 
@@ -76,6 +77,7 @@ MGE::AEntity* ILM::ILMResourceManager::instantiatePlayer(std::string name)
         enemySpawnerComp->addEnemy(enemyName, enemyType, texturePath, speed, HP, damage, baseSpawnRate, scale);
     }
 
-    app->registerComponent(enemySpawnerComp, playerEntity);
+    playerEntity->attachComponent(enemySpawnerComp);
+    app->registerEntityAndAttachedComponents(playerEntity);
     return playerEntity;
 }
