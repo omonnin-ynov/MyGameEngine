@@ -74,12 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="config.yaml" />
-    <None Include="res\vscode-debuggee.lua">
-      <Filter>Resource Files\LUA Scripts</Filter>
-    </None>
-    <None Include="res\dkjson.lua">
-      <Filter>Resource Files\LUA Scripts</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\awesomeface.png">
@@ -98,6 +92,18 @@
       <Filter>Resource Files\images</Filter>
     </Image>
     <Image Include="res\skeleton.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\bone.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\cross.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\Lizardman.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\reaper.png">
       <Filter>Resource Files\images</Filter>
     </Image>
   </ItemGroup>

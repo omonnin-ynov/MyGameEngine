@@ -85,7 +85,7 @@ void ILM::EnemySpawner::Update(float deltaTime)
             sf::Vector2f enemyPosition = app->getParentEntity(this)->getPosition() + spawnOffset;
             newEnemy->setPosition(enemyPosition);
 
-            app->createSpriteAndPhysicsComponents(newEnemy, enemyInfo._texture, b2_staticBody, true, 0x0004, 0x0003);
+            app->createSpriteAndPhysicsComponents(newEnemy, enemyInfo._texture, b2_dynamicBody, true, 0x0004, 0x0003);
             // thankfully, adding elements to std::map does not invalidate iterators (from the Update implicit for loop)
             app->registerEntityAndAttachedComponents(newEnemy);
         }

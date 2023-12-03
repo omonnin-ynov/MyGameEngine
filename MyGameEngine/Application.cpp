@@ -40,6 +40,7 @@ MGE::Application* MGE::Application::getInstance()
 
 void MGE::Application::start()
 {
+    getWorld()->DebugDraw();
     if (_window) {
         sf::Clock clock;
         while (!_shouldExit) {
@@ -302,12 +303,12 @@ void MGE::Application::createSpriteAndPhysicsComponents(AEntity* parent, sf::Tex
     fixtureDef.isSensor = isSensor;
     fixtureDef.filter.categoryBits = collisionGroup;
     fixtureDef.filter.maskBits = collisionMask;
-    sf::IntRect spriteSize = Sprite->getSprite().getTextureRect();
+    sf::Vector2u spriteSize = Sprite->getTexture().getSize();
     b2PolygonShape box{};
-    box.SetAsBox(spriteSize.width / PhysicsSystem::WorldScale, spriteSize.height / PhysicsSystem::WorldScale);
-    fixtureDef.shape = &box;
+    box.SetAsBox((static_cast<float>(spriteSize.x) * parent->getScale().x)  / PhysicsSystem::WorldScale, (static_cast<float>(spriteSize.y) * parent->getScale().y) / PhysicsSystem::WorldScale);
 
     auto Collider = new BoxCollider(parent->getName() + "Collider", fixtureDef);
+    Collider->set_shape(box);
     Collider->createFixture(*RigidBody->getBody());
 
     parent->attachComponent(Sprite);

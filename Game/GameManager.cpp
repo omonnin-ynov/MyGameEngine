@@ -12,12 +12,14 @@ MGE::AEntity* ILM::ILMResourceManager::instantiatePlayer(std::string name)
     {
         if (player["name"].as<std::string>() == name)
         {
-            playerEntity = app->createEntity<ILM::Player>(player["name"].as<std::string>());
+            float playerHP = player["hp"].as<float>();
+            playerEntity = new Player(player["name"].as<std::string>(), 0, 0, playerHP, 0);
+            playerEntity->scale(player["scale"].as<float>(), player["scale"].as<float>());
             // Get player Sprite
             auto spriteNode = player["sprite"];
             sf::Texture playerTexture;
             playerTexture.loadFromFile(getPathFromName(spriteNode["textureName"].as<std::string>()));
-            app->createSpriteAndPhysicsComponents(playerEntity, playerTexture, b2_dynamicBody, false, 0x0001, 0x0004);
+            app->createSpriteAndPhysicsComponents(playerEntity, playerTexture, b2_dynamicBody, true, 0x0001, 0x0004);
 
             auto projectileSpawnerNode = player["projectileSpawner"];
             auto PSName = projectileSpawnerNode["name"].as<std::string>();

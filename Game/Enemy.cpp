@@ -66,3 +66,15 @@ void ILM::Enemy::setTarget(AEntity* target)
     _target = target;
 }
 
+void ILM::Enemy::BeginCollision(MGE::Collision collision)
+{
+    if (auto damageableEntity = dynamic_cast<IDamageable*>(collision.getOtherParent()))
+    {
+        float damageDealt = damageableEntity->takeDamage(this, _damage);
+    }
+}
+
+void ILM::Enemy::EndCollision(MGE::Collision collision)
+{
+}
+

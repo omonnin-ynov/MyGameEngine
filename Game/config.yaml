@@ -14,9 +14,19 @@ res:
     path: skeleton.png
   - name: BouncyProjectile
     path: BouncyProjectile.lua
+  - name: cross
+    path: cross.png
+  - name: bone
+    path: bone.png
+  - name: lizardman
+    path: Lizardman.png
+  - name: reaper
+    path: reaper.png
+
 player:
   - name: simon
     hp: 10
+    scale: 3
     sprite:
       name: playerSprite
       textureName: simonIdle
@@ -37,7 +47,25 @@ player:
           duration: 2
           hp: 2
           scale: 0.75
-          baseSpawnRate: 0.05
+          baseSpawnRate: 0.5
+        - name: cross
+          type: projectile
+          textureName: cross
+          speed: 30.0
+          damage: 2
+          duration: 2
+          hp: 10000
+          scale: 1.5
+          baseSpawnRate: 1
+        - name: bone
+          type: projectile
+          textureName: bone
+          speed: 15.0
+          damage: 1
+          duration: 2
+          hp: 3
+          scale: 2
+          baseSpawnRate: 1
 enemySpawner:
   name: enemySpawner
   spawnRateMod: 1
@@ -55,9 +83,25 @@ enemySpawner:
       scale: 2
     - name: bat
       type: basic
-      textureName: skeleton
+      textureName: bat
       speed: 150
       damage: 1
       HP: 1
       baseSpawnRate: 1
+      scale: 2
+    - name: lizardman
+      type: basic
+      textureName: lizardman
+      speed: 110
+      damage: 2
+      HP: 3
+      baseSpawnRate: 1
+      scale: 2
+    - name: reaper
+      type: basic
+      textureName: reaper
+      speed: 150
+      damage: 1
+      HP: 10
+      baseSpawnRate: 10
       scale: 2

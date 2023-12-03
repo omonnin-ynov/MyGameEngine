@@ -9,7 +9,7 @@ MGE::RigidBodyComponent::RigidBodyComponent(std::string name) : _bodyDef()
 
 MGE::RigidBodyComponent::~RigidBodyComponent()
 {
-    (*Application::getInstance()->getb2BodyToComp()).erase(_body);
+    Application::getInstance()->getb2BodyToComp()->erase(_body);
     Application::getInstance()->getWorld()->DestroyBody(_body);
 }
 

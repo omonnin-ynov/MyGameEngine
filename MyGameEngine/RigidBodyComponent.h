@@ -1,7 +1,6 @@
 #pragma once
 #include "AComponent.h"
 #include <box2d/box2d.h>
-#include "ICollidable.h"
 
 namespace MGE {
     class RigidBodyComponent :

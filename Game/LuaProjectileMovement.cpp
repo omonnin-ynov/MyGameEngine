@@ -16,8 +16,6 @@ void ILM::LuaProjectileMovement::Start()
 
 void ILM::LuaProjectileMovement::Update(float deltaTime)
 {
-    ALuaScript::Update(deltaTime);
-
     luabridge::LuaRef update = luabridge::getGlobal(_luaState, "update");
     auto parent = dynamic_cast<ILM::Projectile*>(MGE::Application::getInstance()->getParentEntity(this));
 

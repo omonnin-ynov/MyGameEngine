@@ -11,7 +11,5 @@ namespace MGE
         lua_State* _luaState;
     public:
         ALuaScript(std::string name);
-
-        void Update(float deltaTime) override;
     };
 }

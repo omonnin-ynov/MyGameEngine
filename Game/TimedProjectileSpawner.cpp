@@ -94,7 +94,6 @@ ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name, float spaw
 void ILM::TimedProjectileSpawner::Update(float deltaTime)
 {
     MGE::Application* app =  MGE::Application::getInstance();
-
     // attempt projectile spawn
     for (auto& [name, info] : _projectiles)
     {

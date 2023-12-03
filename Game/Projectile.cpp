@@ -21,6 +21,19 @@ void ILM::Projectile::resetTimer()
     timer.restart();
 }
 
+void ILM::Projectile::BeginCollision(MGE::Collision collision)
+{
+    auto damageableEntity = dynamic_cast<IDamageable*>(collision.getOtherParent());
+    if (_hp > 0 && damageableEntity)
+    {
+        float damageDealt = damageableEntity->takeDamage(this, _damage);
+    }
+}
+
+void ILM::Projectile::EndCollision(MGE::Collision collision)
+{
+}
+
 float ILM::Projectile::takeDamage(MGE::AEntity* parent, float damage)
 {
     _hp -= 1.0f;

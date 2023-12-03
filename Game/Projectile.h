@@ -1,11 +1,13 @@
 #pragma once
 #include "IDamageable.h"
 #include "MyGameEngine/AEntity.h"
+#include "MyGameEngine/ICollidable.h"
 
 namespace ILM
 {
     class Projectile :
         public MGE::AEntity,
+        public MGE::ICollidable,
 		public IDamageable
     {
     protected:
@@ -28,6 +30,11 @@ namespace ILM
         void setSpeed(float speed);
         float getElapsedTime();
         void resetTimer();
+
+        // from ICollidable
+        void BeginCollision(MGE::Collision collision) override;
+        void EndCollision(MGE::Collision collision) override;
+
         // from IDamageable
         float takeDamage(MGE::AEntity* parent, float damage) override;
     };

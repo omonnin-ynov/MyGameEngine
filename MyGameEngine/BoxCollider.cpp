@@ -46,3 +46,14 @@ void MGE::BoxCollider::setHalfSize(float x, float y)
     float scale = Application::getInstance()->getPhysics().WorldScale;
     _shape.SetAsBox(_x / scale, _y / scale);
 }
+
+b2PolygonShape* MGE::BoxCollider::shape()
+{
+	return &_shape;
+}
+
+void MGE::BoxCollider::set_shape(b2PolygonShape shape)
+{
+	_shape = shape;
+    _fixtureDef.shape = &_shape;
+}

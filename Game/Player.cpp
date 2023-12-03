@@ -14,6 +14,16 @@ void ILM::Player::Start()
 {
 }
 
+void ILM::Player::BeginCollision(MGE::Collision collision)
+{
+}
+
+void ILM::Player::EndCollision(MGE::Collision collision)
+{
+}
+
 float ILM::Player::takeDamage(MGE::AEntity* parent, float damage)
 {
+	_hp -= damage;
+	return damage;
 }

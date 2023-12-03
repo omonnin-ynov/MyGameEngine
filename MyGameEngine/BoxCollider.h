@@ -21,5 +21,7 @@ namespace MGE {
 
         const b2Shape* getColliderShape() override;
         void setHalfSize(float x, float y);
+        b2PolygonShape* shape();
+        void set_shape(b2PolygonShape shape);
     };
 }
