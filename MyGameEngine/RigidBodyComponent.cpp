@@ -13,12 +13,28 @@ MGE::RigidBodyComponent::~RigidBodyComponent()
     Application::getInstance()->getWorld()->DestroyBody(_body);
 }
 
-b2Body* MGE::RigidBodyComponent::getBody()
+void MGE::RigidBodyComponent::Awake()
+{
+}
+
+void MGE::RigidBodyComponent::Start()
+{
+}
+
+void MGE::RigidBodyComponent::Update(float deltaTime)
+{
+}
+
+void MGE::RigidBodyComponent::LateUpdate(float deltaTime)
+{
+}
+
+b2Body* MGE::RigidBodyComponent::getBody() const
 {
     return _body;
 }
 
-b2BodyType MGE::RigidBodyComponent::getBodyType()
+b2BodyType MGE::RigidBodyComponent::getBodyType() const
 {
     return _body->GetType();
 }
@@ -28,7 +44,7 @@ void MGE::RigidBodyComponent::setBodyType(b2BodyType bodyType)
     _body->SetType(bodyType);
 }
 
-const b2Transform& MGE::RigidBodyComponent::getTransform()
+const b2Transform& MGE::RigidBodyComponent::getTransform() const
 {
     return _body->GetTransform();
 }
@@ -43,7 +59,7 @@ void MGE::RigidBodyComponent::setTransform(b2Vec2 position, float angle)
     _body->SetTransform(position, angle);
 }
 
-const b2Vec2& MGE::RigidBodyComponent::getPosition()
+const b2Vec2& MGE::RigidBodyComponent::getPosition() const
 {
     return _body->GetTransform().p;
 }
@@ -53,12 +69,12 @@ void MGE::RigidBodyComponent::setPosition(b2Vec2 position)
     _body->SetTransform(position, _body->GetAngle());
 }
 
-float MGE::RigidBodyComponent::getAngle()
+float MGE::RigidBodyComponent::getAngle() const
 {
     return _body->GetAngle();
 }
 
-float MGE::RigidBodyComponent::getAngularVelocity()
+float MGE::RigidBodyComponent::getAngularVelocity() const
 {
     return _body->GetAngularVelocity();
 }
@@ -73,7 +89,7 @@ void MGE::RigidBodyComponent::SetLinearVelocity(const b2Vec2 v)
     _body->SetLinearVelocity(v);
 }
 
-const b2Vec2 MGE::RigidBodyComponent::GetLinearVelocity()
+const b2Vec2 MGE::RigidBodyComponent::GetLinearVelocity() const
 {
      return _body->GetLinearVelocity();
 }

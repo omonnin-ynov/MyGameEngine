@@ -14,10 +14,10 @@ namespace MGE {
 
         virtual ~AComponent() = default;
 
-        virtual void Awake();
-        virtual void Start();
-        virtual void Update(float deltaTime);
-        virtual void LateUpdate(float deltaTime);
-        uint64_t getID();
+        virtual void Awake() = 0;
+        virtual void Start() = 0;
+        virtual void Update(float deltaTime) = 0;
+        virtual void LateUpdate(float deltaTime) = 0;
+        uint64_t getID() const;
     };
 }

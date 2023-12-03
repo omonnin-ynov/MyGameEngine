@@ -14,7 +14,7 @@ namespace ILM
             float _speed;
             float _damage;
             float _duration;
-            int _hp;
+            float _hp;
             float _scale;
             float _baseSpawnRate;
             sf::Clock _clock;
@@ -48,10 +48,13 @@ namespace ILM
         int getAmountMod() const;
         void setAmountMod(int amountMod);
 
+        void Awake() override;
+        void Start() override;
         void Update(float deltaTime) override;
+        void LateUpdate(float deltaTime) override;
 
         void addProjectile(std::string projectileName, std::string projectileType, std::string texturePath, float speed, float damage, float
-                           duration, int hp, float scale, float baseSpawnRate);
+                           duration, float hp, float scale, float baseSpawnRate);
         void clearProjectiles();
         void removeProjectile(std::string projectileName);
     };

@@ -13,11 +13,11 @@ namespace MGE {
     public:
         BoxCollider(std::string name);
         BoxCollider(std::string name, b2FixtureDef fixtureDef);
-        
-        virtual void Awake() override;
-        virtual void Start() override;
-        virtual void Update(float deltaTime) override;
-        virtual void LateUpdate(float deltaTime) override;
+
+        void Awake() override;
+        void Start() override;
+        void Update(float deltaTime) override;
+        void LateUpdate(float deltaTime) override;
 
         const b2Shape* getColliderShape() override;
         void setHalfSize(float x, float y);

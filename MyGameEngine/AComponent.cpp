@@ -12,23 +12,7 @@ MGE::AComponent::AComponent(std::string name) : _name(name)
     _ID = Application::getInstance()->GenerateID();
 }
 
-void MGE::AComponent::Awake()
-{
-}
-
-void MGE::AComponent::Start()
-{
-}
-
-void MGE::AComponent::Update(float deltaTime)
-{
-}
-
-void MGE::AComponent::LateUpdate(float deltaTime)
-{
-}
-
-uint64_t MGE::AComponent::getID()
+uint64_t MGE::AComponent::getID() const
 {
     return _ID;
 }

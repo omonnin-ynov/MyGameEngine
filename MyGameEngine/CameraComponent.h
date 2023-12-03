@@ -13,7 +13,10 @@ namespace MGE {
         CameraComponent(std::string name);
         CameraComponent(std::string name, float x, float y, float halfSizeX, float halfSizeY, bool rotationFollowsParent);
 
-        virtual void LateUpdate(float deltaTime) override;
+        void Awake() override;
+        void Start() override;
+        void Update(float deltaTime) override;
+        void LateUpdate(float deltaTime) override;
 
         sf::View* getView();
 

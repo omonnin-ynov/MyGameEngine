@@ -1,14 +1,13 @@
 #pragma once
-#include <iostream>
 #include <yaml-cpp/node/convert.h>
 #include <yaml-cpp/node/node.h>
 
-#include "Application.h"
 #include "Application.h"
 #include "ResourceManager.h"
 #include "SpriteRendererComponent.h"
 
 namespace YAML {
+    /// Unused for now, but may come in handy later
     template<>
     struct convert<MGE::SpriteRendererComponent> {
         static bool decode(const Node& node, MGE::SpriteRendererComponent& comp) {

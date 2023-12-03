@@ -4,7 +4,7 @@
 
 namespace MGE {
     class SpriteRendererComponent :
-        public AComponent, public sf::Drawable, public ICollidable
+        public AComponent, public sf::Drawable
     {
     protected:
         sf::Sprite _sprite;
@@ -14,7 +14,11 @@ namespace MGE {
         SpriteRendererComponent(std::string name);
         SpriteRendererComponent(std::string name, sf::Texture texture);
 
-        virtual void Update(float deltaTime) override;
+        void Awake() override;
+        void Start() override;
+        void Update(float deltaTime) override;
+        void LateUpdate(float deltaTime) override;
+
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
         const sf::Sprite& getSprite();
@@ -22,10 +26,6 @@ namespace MGE {
         const sf::Texture& getTexture();
         void setTexture(sf::Texture texture);
         void loadAndSetTexture(std::string path);
-
-        // Inherited via ICollidable
-        virtual void BeginCollision(Collision collision) override;
-        virtual void EndCollision(Collision collision) override;
     };
 
 }

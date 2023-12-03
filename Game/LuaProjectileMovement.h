@@ -1,15 +1,17 @@
 #pragma once
-#include "MyGameEngine/LuaScript.h"
+#include "MyGameEngine/ALuaScript.h"
 
 namespace ILM
 {
-    class LuaProjectileMovement : public MGE::LuaScript
+    class LuaProjectileMovement : public MGE::ALuaScript
     {
-    protected:
-        lua_State* _luaState;
     public:
         LuaProjectileMovement(std::string name);
+
+        void Awake() override;
+        void Start() override;
         void Update(float deltaTime) override;
+        void LateUpdate(float deltaTime) override;
     };
 }
 

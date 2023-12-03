@@ -9,8 +9,8 @@ namespace ILM
     protected:
         
     public:
-        ILMResourceManager();
-
+        ILMResourceManager() = default;
+        // TODO fix this
         MGE::AEntity* instantiatePlayer(std::string name);
     };
 }

@@ -9,9 +9,8 @@ namespace MGE
 	{
 	protected:
 		lua_State* _luaState;
-
-	protected:
 		void ReportErrors(lua_State* luaState, int status);
+
 	public:
 		LuaSystem();
 		void SetScript(std::string scriptPath);

@@ -13,6 +13,18 @@ MGE::CameraComponent::CameraComponent(std::string name, float x, float y, float 
     _rotationFollowsParent = rotationFollowsParent;
 }
 
+void MGE::CameraComponent::Awake()
+{
+}
+
+void MGE::CameraComponent::Start()
+{
+}
+
+void MGE::CameraComponent::Update(float deltaTime)
+{
+}
+
 void MGE::CameraComponent::LateUpdate(float deltaTime)
 {
     AEntity* parent = Application::getInstance()->getParentEntity(this);

@@ -15,8 +15,8 @@ namespace MGE {
         AEntity(std::string name);
         AEntity(std::string name, float x, float y);
 
-        virtual void Awake();
-        virtual void Start();
+        virtual void Awake() = 0;
+        virtual void Start() = 0;
         virtual void Update(float deltaTime);
         virtual void LateUpdate(float deltaTime);
 
@@ -27,7 +27,7 @@ namespace MGE {
         uint64_t getID();
         std::string getName() const;
 
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
         std::string E();
     };

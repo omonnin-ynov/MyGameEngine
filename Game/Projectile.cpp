@@ -37,7 +37,7 @@ ILM::Projectile::Projectile(std::string name) : AEntity(name), IDamageable(0, 0)
     timer.restart();
 }
 
-ILM::Projectile::Projectile(const std::string& name, float speed, float damage, float areaMod, float duration, int hp)
+ILM::Projectile::Projectile(const std::string& name, float speed, float damage, float areaMod, float duration, float hp)
     : AEntity(name),
 	IDamageable(hp, damage),
     _speed(speed),
@@ -47,6 +47,14 @@ ILM::Projectile::Projectile(const std::string& name, float speed, float damage, 
     timer.restart();
 }
 
+void ILM::Projectile::Awake()
+{
+}
+
+void ILM::Projectile::Start()
+{
+}
+
 void ILM::Projectile::Update(float deltaTime)
 {
     MGE::AEntity::Update(deltaTime);
@@ -54,10 +62,4 @@ void ILM::Projectile::Update(float deltaTime)
     {
         MGE::Application::getInstance()->markForDeletion(this->getID());
     }
-    // rotate direction vector (0, 1) by the rotation of the projectile
-    //float rotation = getRotation() * (b2_pi / 180);
-    //sf::Vector2f direction{ -1 * std::sin(rotation), std::cos(rotation) };
-    //direction *= _speed * - 1;
-    //this->move(direction * deltaTime);
-    //AEntity::Update(deltaTime);
 }

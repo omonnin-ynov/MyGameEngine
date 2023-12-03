@@ -1,7 +1,6 @@
 #pragma once
 #include <map>
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <ranges>
 #include <random>
 #include "PhysicsSystem.h"
@@ -28,10 +27,9 @@ namespace MGE
 		std::map<uint64_t, AEntity*> _entities;
 		std::map<uint64_t, AComponent*> _components;
 		std::map<uint64_t, uint64_t> _compToEntityLink;
+		// I'm ok with adding an extra map to keep track of, bc only the RigidBodyComponent will ever modify it
+		// and it makes collisions much more efficient
 		std::map<b2Body*, RigidBodyComponent*> _b2BodyToComp;
-		
-
-	protected:
 		std::vector<uint64_t> _toBeDeleted;
 
 		sf::RenderWindow* _window;
@@ -55,17 +53,15 @@ namespace MGE
 
 		std::map<uint64_t, AEntity*>* getEntities();
 		std::map<uint64_t, AComponent*>* getComponents();
-		// I'm ok with adding an extra map to keep track of, bc only the RigidBodyComponent will ever modify it
-		// and it makes collisions much more efficient
 		std::map<b2Body*, RigidBodyComponent*>* getb2BodyToComp();
 
 		PhysicsSystem& getPhysics();
 		b2World* getWorld();
 		LuaSystem* getLua();
 
-		sf::RenderWindow* getWindow();
+		sf::RenderWindow* getWindow() const;
 
-		CameraComponent* getActiveCamera();
+		CameraComponent* getActiveCamera() const;
 
 		void setActiveCamera(CameraComponent* cameraComp);
 
@@ -81,11 +77,11 @@ namespace MGE
 		void registerComponent(AComponent* comp, AEntity* parent);
 		void markForDeletion(uint64_t ID);
 
-		void createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture texture, b2BodyType bodyType, bool isSensor,
+		void createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture& texture, b2BodyType bodyType, bool isSensor,
 		                                      uint16 collisionGroup, uint16 collisionMask);
 
-		template <std::derived_from<AEntity> T>
-		T* createEntity(std::string name)
+		template <typename T>
+		std::enable_if_t<std::is_base_of_v<AEntity*, T*>, void> createEntity(std::string name)
 		{
 			T* newEntity = new T(name);
 			_entities[newEntity->getID()] = newEntity;

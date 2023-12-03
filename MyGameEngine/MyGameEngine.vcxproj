@@ -166,7 +166,7 @@
     <ClInclude Include="CollisionListener.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="ICollidable.h" />
-    <ClInclude Include="LuaScript.h" />
+    <ClInclude Include="ALuaScript.h" />
     <ClInclude Include="LuaSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsSystem.h" />
@@ -186,7 +186,7 @@
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionListener.cpp" />
-    <ClCompile Include="LuaScript.cpp" />
+    <ClCompile Include="ALuaScript.cpp" />
     <ClCompile Include="LuaSystem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

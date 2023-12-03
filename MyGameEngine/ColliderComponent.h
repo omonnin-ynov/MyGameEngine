@@ -15,8 +15,8 @@ namespace MGE {
 
         virtual const b2Shape* getColliderShape() = 0;
 
-        void setDensity(float density);
-        void setFriction(float friction);
+        void setDensity(float density) const;
+        void setFriction(float friction) const;
         void createFixture(b2Body& body);
     };
 

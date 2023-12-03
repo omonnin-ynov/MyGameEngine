@@ -1,5 +1,4 @@
 #include "EnemySpawner.h"
-
 #include <iostream>
 #include "Enemy.h"
 #include "MyGameEngine/Application.h"
@@ -57,10 +56,19 @@ void ILM::EnemySpawner::setHpMod(float hpMod)
     _hpMod = hpMod;
 }
 
+void ILM::EnemySpawner::Awake()
+{
+}
+
+void ILM::EnemySpawner::Start()
+{
+}
+
 void ILM::EnemySpawner::Update(float deltaTime)
 {
     MGE::Application* app = MGE::Application::getInstance();
 
+    // check if enemies should be spawned
     for (auto& [name, enemyInfo] : _enemies)
     {
         if (enemyInfo._clock.getElapsedTime().asSeconds() > enemyInfo._baseSpawnRate * _spawnRateMod)
@@ -73,7 +81,7 @@ void ILM::EnemySpawner::Update(float deltaTime)
             // Get player position and viewport size to spawn enemies slightly outside the viewport
             sf::Vector2f spawnRectangle = app->getActiveCamera()->getCameraViewportSize() * 1.1f;
             sf::Vector2f spawnOffset = sampleRandomPointOnRectPerimeter(spawnRectangle);
-            spawnOffset = { spawnOffset.x - (spawnRectangle.x / 2.0f), spawnOffset.y - (spawnRectangle.y / 2.0f)};
+            spawnOffset = { spawnOffset.x - (spawnRectangle.x / 2.0f), spawnOffset.y - (spawnRectangle.y / 2.0f) };
             sf::Vector2f enemyPosition = app->getParentEntity(this)->getPosition() + spawnOffset;
             newEnemy->setPosition(enemyPosition);
 
@@ -83,6 +91,11 @@ void ILM::EnemySpawner::Update(float deltaTime)
         }
     }
 }
+
+void ILM::EnemySpawner::LateUpdate(float deltaTime)
+{
+}
+
 
 sf::Vector2f ILM::EnemySpawner::sampleRandomPointOnRectPerimeter(sf::Vector2f& rectangle)
 {
@@ -108,7 +121,7 @@ sf::Vector2f ILM::EnemySpawner::sampleRandomPointOnRectPerimeter(sf::Vector2f& r
     {
         return { static_cast<float>(pointOnRectangle), rectangle.y };
     }
-    else return {0, static_cast<float>(pointOnRectangle) - rectangle.x};
+    return {0, static_cast<float>(pointOnRectangle) - rectangle.x};
 }
 
 void ILM::EnemySpawner::addEnemy(std::string enemyName, std::string enemyType, std::string texturePath, float speed, float HP, float damage,
@@ -134,7 +147,7 @@ void ILM::EnemySpawner::clearEnemies()
 
 void ILM::EnemySpawner::removeEnemy(std::string name)
 {
-    int removed = _enemies.erase(name);
+    size_t removed = _enemies.erase(name);
     if (!removed)
     {
         std::cout << "warning: attempt to remove nonexistent enemy from enemy spawner\n";

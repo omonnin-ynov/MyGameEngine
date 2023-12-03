@@ -38,7 +38,10 @@ namespace ILM
         float getHpMod() const;
         void setHpMod(float hpMod);
 
+        void Awake() override;
+        void Start() override;
         void Update(float deltaTime) override;
+        void LateUpdate(float deltaTime) override;
 
         void addEnemy(std::string enemyName, std::string enemyType, std::string texturePath, float speed, float HP, float damage, float baseSpawnRate, float scale);
         void clearEnemies();

@@ -1,22 +1,27 @@
 #include "LuaProjectileMovement.h"
-
 #include "Projectile.h"
 #include "MyGameEngine/Application.h"
 
-ILM::LuaProjectileMovement::LuaProjectileMovement(std::string name) : LuaScript(name), _luaState(MGE::Application::getInstance()->getLua()->getLuaState())
+ILM::LuaProjectileMovement::LuaProjectileMovement(std::string name) : ALuaScript(name)
 {
-    // I'm not sure if lua_state is ever going to be invalidated, I assume not
-    // If it does turn out to be the case, I can always fetch it from application->getLua
+}
+
+void ILM::LuaProjectileMovement::Awake()
+{
+}
+
+void ILM::LuaProjectileMovement::Start()
+{
 }
 
 void ILM::LuaProjectileMovement::Update(float deltaTime)
 {
-    LuaScript::Update(deltaTime);
+    ALuaScript::Update(deltaTime);
 
     luabridge::LuaRef update = luabridge::getGlobal(_luaState, "update");
     auto parent = dynamic_cast<ILM::Projectile*>(MGE::Application::getInstance()->getParentEntity(this));
 
-    try 
+    try
     {
         luabridge::LuaResult res = update(deltaTime, parent, parent->getSpeed());
         for (int i = 0; i < res.size(); i++)
@@ -24,8 +29,13 @@ void ILM::LuaProjectileMovement::Update(float deltaTime)
             std::cout << res[i].isValid() << res[i].isNumber() << res[i] << std::endl;
         }
 
-    } catch (luabridge::LuaException const& e)
+    }
+    catch (luabridge::LuaException const& e)
     {
         std::cerr << e.what();
     }
+}
+
+void ILM::LuaProjectileMovement::LateUpdate(float deltaTime)
+{
 }

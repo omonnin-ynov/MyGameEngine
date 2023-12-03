@@ -1,9 +1,7 @@
 #include "Enemy.h"
-
 #include "MyGameEngine/Application.h"
 
-
-ILM::Enemy::Enemy(std::string name) : MGE::AEntity(name), IDamageable(0, 0)
+ILM::Enemy::Enemy(std::string name) : MGE::AEntity(name), IDamageable(0, 0), _speed(0), _target()
 {
 }
 
@@ -15,15 +13,26 @@ ILM::Enemy::Enemy(std::string name, float speed, float hp, float damage, AEntity
 {
 }
 
+void ILM::Enemy::Awake()
+{
+}
+
+void ILM::Enemy::Start()
+{
+}
+
 void ILM::Enemy::Update(float deltaTime)
 {
     AEntity::Update(deltaTime);
 
-    // get enemy direction
-    sf::Vector2f direction = _target->getPosition() - getPosition();
-    //normalize direction vector
-    float directionLen = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-    this->move((direction / directionLen) * _speed * deltaTime);
+    if (_target)
+    {
+        // get enemy direction
+        sf::Vector2f direction = _target->getPosition() - getPosition();
+        //normalize direction vector
+        float directionLen = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        this->move((direction / directionLen) * _speed * deltaTime);
+    }
 }
 
 float ILM::Enemy::getSpeed() const

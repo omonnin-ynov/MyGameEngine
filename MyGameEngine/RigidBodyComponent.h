@@ -15,22 +15,27 @@ namespace MGE {
         RigidBodyComponent(std::string name);
         ~RigidBodyComponent() override;
 
-        b2Body* getBody();
-        b2BodyType getBodyType();
+        void Awake() override;
+        void Start() override;
+        void Update(float deltaTime) override;
+        void LateUpdate(float deltaTime) override;
+
+        b2Body* getBody() const;
+        b2BodyType getBodyType() const;
         void setBodyType(b2BodyType bodyType);
 
-        const b2Transform& getTransform();
+        const b2Transform& getTransform() const;
         void setTransform(b2Vec2 position, float angle);
 
-        const b2Vec2& getPosition();
+        const b2Vec2& getPosition() const;
         void setPosition(b2Vec2 position);
 
-        float getAngle();
+        float getAngle() const;
 
-        float getAngularVelocity();
+        float getAngularVelocity() const;
         void setAngularVelocity(float omega);
 
         void SetLinearVelocity(const b2Vec2 v);
-        const b2Vec2 GetLinearVelocity();
+        const b2Vec2 GetLinearVelocity() const;
     };
 }

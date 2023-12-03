@@ -5,10 +5,13 @@
 
 namespace MGE
 {
-    class LuaScript : public AComponent
+    class ALuaScript : public AComponent
     {
+    protected:
+        lua_State* _luaState;
     public:
-        LuaScript(std::string name);
+        ALuaScript(std::string name);
+
         void Update(float deltaTime) override;
     };
 }

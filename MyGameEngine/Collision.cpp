@@ -1,10 +1,5 @@
 #include "Collision.h"
 
-
-MGE::Collision::Collision()
-{
-}
-
 MGE::Collision::Collision(b2Body* selfb2_body, RigidBodyComponent* self_rigid_body, AEntity* self_parent, b2Body* otherb2_body,
 	RigidBodyComponent* other_rigid_body, AEntity* other_parent)
 	: _selfb2Body(selfb2_body),
@@ -15,7 +10,6 @@ MGE::Collision::Collision(b2Body* selfb2_body, RigidBodyComponent* self_rigid_bo
 	_otherParent(other_parent)
 {
 }
-
 
 b2Body* MGE::Collision::getSelfb2Body() const
 {

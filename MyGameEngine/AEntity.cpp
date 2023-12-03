@@ -20,14 +20,6 @@ MGE::AEntity::AEntity(std::string name, float x, float y)
     this->setPosition(x, y);
 }
 
-void MGE::AEntity::Awake()
-{
-}
-
-void MGE::AEntity::Start()
-{
-}
-
 void MGE::AEntity::Update(float deltaTime)
 {
     for (AComponent* comp : _components) {

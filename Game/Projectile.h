@@ -18,8 +18,10 @@ namespace ILM
     public:
         Projectile(std::string name);
 
-        Projectile(const std::string& name, float speed, float damage, float areaMod, float duration, int hp);
+        Projectile(const std::string& name, float speed, float damage, float areaMod, float duration, float hp);
 
+        void Awake() override;
+        void Start() override;
         void Update(float deltaTime) override;
 
         float getSpeed() const;

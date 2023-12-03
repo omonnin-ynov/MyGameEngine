@@ -14,7 +14,19 @@ MGE::CircleComponent::CircleComponent(std::string name)
     _offsetY = 0;
 }
 
+void MGE::CircleComponent::Awake()
+{
+}
+
+void MGE::CircleComponent::Start()
+{
+}
+
 void MGE::CircleComponent::Update(float deltaTime)
+{
+}
+
+void MGE::CircleComponent::LateUpdate(float deltaTime)
 {
 }
 

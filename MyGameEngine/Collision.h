@@ -17,7 +17,7 @@ namespace MGE {
 		AEntity* _otherParent;
 
     public:
-        Collision();
+        Collision() = default;
 
         Collision(b2Body* selfb2_body, RigidBodyComponent* self_rigid_body, AEntity* self_parent, b2Body* otherb2_body,
             RigidBodyComponent* other_rigid_body, AEntity* other_parent);

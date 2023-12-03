@@ -1,13 +1,8 @@
 #include "GameManager.h"
-
 #include "EnemySpawner.h"
+#include "Player.h"
 #include "TimedProjectileSpawner.h"
 #include "MyGameEngine/Application.h"
-#include "MyGameEngine/SpriteRendererComponent.h"
-
-ILM::ILMResourceManager::ILMResourceManager()
-{
-}
 
 MGE::AEntity* ILM::ILMResourceManager::instantiatePlayer(std::string name)
 {
@@ -17,7 +12,7 @@ MGE::AEntity* ILM::ILMResourceManager::instantiatePlayer(std::string name)
     {
         if (player["name"].as<std::string>() == name)
         {
-            playerEntity = app->createEntity<MGE::AEntity>(player["name"].as<std::string>());
+            playerEntity = app->createEntity<ILM::Player>(player["name"].as<std::string>());
             // Get player Sprite
             auto spriteNode = player["sprite"];
             sf::Texture playerTexture;
@@ -45,7 +40,7 @@ MGE::AEntity* ILM::ILMResourceManager::instantiatePlayer(std::string name)
                     projectileInfo["speed"].as<float>(),
                     projectileInfo["damage"].as<float>(),
                     projectileInfo["duration"].as<float>(),
-                    projectileInfo["hp"].as<int>(),
+                    projectileInfo["hp"].as<float>(),
                     projectileInfo["scale"].as<float>(),
                     projectileInfo["baseSpawnRate"].as<float>());
             }

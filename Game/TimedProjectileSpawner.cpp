@@ -1,15 +1,13 @@
 #include "TimedProjectileSpawner.h"
 #include <format>
-
 #include "LuaProjectileMovement.h"
 #include "MyGameEngine/Application.h"
 #include "Projectile.h"
-#include "MyGameEngine/BoxCollider.h"
 #include "MyGameEngine/ResourceManager.h"
 #include "MyGameEngine/RigidBodyComponent.h"
-#include "MyGameEngine/SpriteRendererComponent.h"
 
-ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name) : _spawnRateMod(1.0f), _speedMod(1.0f), _damageMod(1.0f), _areaMod(1.0f), _amountMod(1), _durationMod(1.0f)
+ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name) : _spawnRateMod(1.0f), _speedMod(1.0f), _damageMod(1.0f), _areaMod(1.0f),
+                                                                        _durationMod(1.0f), _amountMod(1)
 {
 }
 
@@ -73,6 +71,14 @@ void ILM::TimedProjectileSpawner::setAmountMod(int amountMod)
     _amountMod = amountMod;
 }
 
+void ILM::TimedProjectileSpawner::Awake()
+{
+}
+
+void ILM::TimedProjectileSpawner::Start()
+{
+}
+
 ILM::TimedProjectileSpawner::TimedProjectileSpawner(std::string name, float spawnRateMod, float speedMod, float damageMod, float areaMod,
                                                     float durationMod, int amountMod)
     : AComponent(std::move(name)),
@@ -123,8 +129,12 @@ void ILM::TimedProjectileSpawner::Update(float deltaTime)
     }
 }
 
+void ILM::TimedProjectileSpawner::LateUpdate(float deltaTime)
+{
+}
+
 void ILM::TimedProjectileSpawner::addProjectile(std::string projectileName, std::string projectileType,
-                                                std::string texturePath, float speed, float damage, float duration, int hp, float scale, float baseSpawnRate)
+                                                std::string texturePath, float speed, float damage, float duration, float hp, float scale, float baseSpawnRate)
 {
     if (!_projectiles.contains(projectileName))
     {

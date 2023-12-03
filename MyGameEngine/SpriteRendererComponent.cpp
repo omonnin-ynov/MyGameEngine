@@ -7,7 +7,7 @@
 
 using namespace MGE;
 
-SpriteRendererComponent::SpriteRendererComponent(std::string name) : _texture(), _sprite(_texture)
+SpriteRendererComponent::SpriteRendererComponent(std::string name) : _sprite(_texture), _texture()
 {
     _name = name;
 }
@@ -15,6 +15,18 @@ SpriteRendererComponent::SpriteRendererComponent(std::string name) : _texture(),
 SpriteRendererComponent::SpriteRendererComponent(std::string name, sf::Texture texture) : _sprite(_texture), _texture(texture)
 {
     _name = name;
+}
+
+void SpriteRendererComponent::Awake()
+{
+}
+
+void SpriteRendererComponent::Start()
+{
+}
+
+void SpriteRendererComponent::LateUpdate(float deltaTime)
+{
 }
 
 void SpriteRendererComponent::Update(float deltaTime)
@@ -52,20 +64,4 @@ void MGE::SpriteRendererComponent::loadAndSetTexture(std::string path)
     else {
         setTexture(newTexture);
     }
-}
-
-void MGE::SpriteRendererComponent::BeginCollision(Collision collision)
-{
-    auto bodyA = collision.getSelfb2Body();
-    auto bodyB = collision.getOtherb2Body();
-    std::cout << std::format("Collision Begin: self: {}, bodyA: ({}, {}), bodyB: ({}, {}) \n", 
-        _name, bodyA->GetPosition().x, bodyA->GetPosition().y, bodyB->GetPosition().x, bodyB->GetPosition().y);
-}
-
-void MGE::SpriteRendererComponent::EndCollision(Collision collision)
-{
-    auto bodyA = collision.getSelfb2Body();
-    auto bodyB = collision.getOtherb2Body();
-    std::cout << std::format("Collision End: self: {}, bodyA: ({}, {}), bodyB: ({}, {}) \n",
-        _name, bodyA->GetPosition().x, bodyA->GetPosition().y, bodyB->GetPosition().x, bodyB->GetPosition().y);
 }

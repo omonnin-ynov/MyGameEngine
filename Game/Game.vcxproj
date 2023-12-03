@@ -156,6 +156,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="LuaProjectileMovement.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="TimedProjectileSpawner.cpp" />
   </ItemGroup>
@@ -165,6 +166,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="LuaProjectileMovement.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="TimedProjectileSpawner.h" />
   </ItemGroup>

@@ -5,6 +5,14 @@ MGE::PlayerInput::PlayerInput(std::string name)
 {
 }
 
+void MGE::PlayerInput::Awake()
+{
+}
+
+void MGE::PlayerInput::Start()
+{
+}
+
 void MGE::PlayerInput::Update(float deltaTime)
 {
     sf::Vector2f movementAxis{ 0.0f, 0.0f };
@@ -27,4 +35,8 @@ void MGE::PlayerInput::Update(float deltaTime)
         movementAxis.x += _movementMultiplier.x;
     }
     Application::getInstance()->getParentEntity(this)->move(movementAxis * deltaTime);
+}
+
+void MGE::PlayerInput::LateUpdate(float deltaTime)
+{
 }

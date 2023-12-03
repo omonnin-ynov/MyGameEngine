@@ -18,7 +18,8 @@ std::map<b2Body*, MGE::RigidBodyComponent*>* MGE::Application::getb2BodyToComp()
 /// Create Application with IDCounter = 0 and empty list of entities
 /// WARNING: window is nullptr before InitalizeWindow
 /// </summary>
-MGE::Application::Application() : _entities(), _components(), _physics(b2Vec2(0.0f, 0.0f)), _compToEntityLink(), _luaSystem()
+MGE::Application::Application() : _physics(b2Vec2(0.0f, 0.0f)), _luaSystem(), _entities(), _components(),
+                                  _compToEntityLink()
 {
     _IDCounter = 0;
     _window = nullptr;
@@ -65,6 +66,9 @@ void MGE::Application::initalizeWindow(int x, int y)
     _window = new sf::RenderWindow(sf::VideoMode(x, y), "Window created");
 }
 
+/// \brief Runs the main update loop in order:
+/// Update, physics update, LateUpdate, Draw, Display, Delete dirty entities/components
+/// \param deltaTime time since last update
 void MGE::Application::update(float deltaTime)
 {
     for (auto& [key, value] : _entities) {
@@ -155,7 +159,7 @@ MGE::LuaSystem* MGE::Application::getLua()
     return &_luaSystem;
 }
 
-sf::RenderWindow* MGE::Application::getWindow()
+sf::RenderWindow* MGE::Application::getWindow() const
 {
     if (_window->isOpen()) {
         return _window;
@@ -164,16 +168,14 @@ sf::RenderWindow* MGE::Application::getWindow()
     return nullptr;
 }
 
-MGE::CameraComponent* MGE::Application::getActiveCamera()
+MGE::CameraComponent* MGE::Application::getActiveCamera() const
 {
     return _activeCameraComponent;
 }
 
 /// <summary>
-/// Will set the cameraComponent of entity as active for the current window.
-/// Will grab the first CameraComponent it encounters. Does nothing if entity has no CameraComponent.
+/// Sets the camera component as main camera
 /// </summary>
-/// <param name="cameraEntity"></param>
 void MGE::Application::setActiveCamera(CameraComponent* cameraComp)
 {
     _window->setView(*(cameraComp->getView()));
@@ -210,7 +212,6 @@ MGE::AEntity* MGE::Application::getParentEntity(AComponent* comp)
     catch (std::out_of_range) {
         return nullptr;
     }
-    return nullptr;
 }
 
 int MGE::Application::getRand()
@@ -233,6 +234,8 @@ void MGE::Application::registerEntityAndAttachedComponents(AEntity* entity)
     }
 }
 
+/// \brief Destroys entity and all attached components
+/// \param entity entity to be destroyed
 void MGE::Application::destroyEntity(MGE::AEntity* entity)
 {
     std::vector<MGE::AComponent*> components = *entity->getComponents();
@@ -279,12 +282,14 @@ void MGE::Application::markForDeletion(uint64_t ID)
 
 /// \brief create spriteRenderer, Collider and RigidBody components for the given entity.
 /// Since there are many such entities of this type in games, this is a straightforward way to instantiate one.
-/// The collider size is set to the sprite size
-/// \param parent 
-/// \param name 
-/// \param textureName 
-/// \param bodyType 
-void MGE::Application::createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture texture,
+/// The collider size is set to the sprite size and divided by the physics world scale
+/// \param parent Entity for which the components will be created
+/// \param textureName Texture to set for the sprite
+/// \param bodyType dynamic, static or kinematic body (according to b2bodyType)
+/// \param isSensor Is the collider a sensor https://box2d.org/documentation/classb2_fixture.html#aedd23d27ff7ce2d53b6c5b7a878a35d3
+/// \param collisionGroup Which collision group the collider belongs to https://box2d.org/documentation/md__d_1__git_hub_box2d_docs_dynamics.html#autotoc_md79
+/// \param collisionMask Which collision groups can the collider collide with https://box2d.org/documentation/md__d_1__git_hub_box2d_docs_dynamics.html#autotoc_md79
+void MGE::Application::createSpriteAndPhysicsComponents(AEntity* parent, sf::Texture& texture,
                                                         b2BodyType bodyType, bool isSensor, uint16 collisionGroup, uint16 collisionMask)
 {
     auto Sprite = new SpriteRendererComponent(parent->getName() + "Sprite");

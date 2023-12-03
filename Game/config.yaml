@@ -16,6 +16,7 @@ res:
     path: BouncyProjectile.lua
 player:
   - name: simon
+    hp: 10
     sprite:
       name: playerSprite
       textureName: simonIdle
