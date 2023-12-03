@@ -96,7 +96,7 @@ void ILM::TimedProjectileSpawner::Update(float deltaTime)
         {
             info._clock.restart();
 
-            // TODO different projectile types with LUA scripts
+            // TODO different projectile types with LUA functions
             ILM::Projectile* newProj;
             /*switch (info._projectileType)
             {

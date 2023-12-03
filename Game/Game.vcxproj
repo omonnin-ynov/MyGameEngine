@@ -163,6 +163,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="IDamageable.h" />
     <ClInclude Include="LuaProjectileMovement.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="TimedProjectileSpawner.h" />

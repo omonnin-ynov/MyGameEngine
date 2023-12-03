@@ -1,15 +1,16 @@
 #include "Enemy.h"
 
+#include "MyGameEngine/Application.h"
 
-ILM::Enemy::Enemy(std::string name) : MGE::AEntity(name)
+
+ILM::Enemy::Enemy(std::string name) : MGE::AEntity(name), IDamageable(0, 0)
 {
 }
 
 ILM::Enemy::Enemy(std::string name, float speed, float hp, float damage, AEntity* target)
     : MGE::AEntity(std::move(name)),
+    IDamageable(hp, damage),
     _speed(speed),
-    _hp(hp),
-    _damage(damage),
     _target(target)
 {
 }
@@ -35,19 +36,15 @@ void ILM::Enemy::setSpeed(float speed)
     _speed = speed;
 }
 
-float ILM::Enemy::getHp() const
+float ILM::Enemy::takeDamage(MGE::AEntity* parent, float damage)
 {
-    return _hp;
-}
-
-void ILM::Enemy::removeHP(float hp)
-{
-    _hp -= hp;
-}
-
-void ILM::Enemy::setHp(float hp)
-{
-    _hp = hp;
+    _hp -= damage;
+    if (_hp <= 0)
+    {
+        MGE::Application::getInstance()->markForDeletion(this->getID());
+        return damage + _hp;
+    }
+    return damage;
 }
 
 MGE::AEntity* ILM::Enemy::getTarget() const

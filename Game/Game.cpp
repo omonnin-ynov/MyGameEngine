@@ -25,7 +25,6 @@ int main()
 
     MGE::AEntity* player = resManager->instantiatePlayer("simon");
 
-    // TODO rotation still incorrect
     player->setPosition(0.0f, -500.0f);
     auto InputComponent = app->createComponentAndAttach<MGE::PlayerInput>("playerInput", player);
 

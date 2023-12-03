@@ -13,7 +13,7 @@ MGE::ColliderComponent::ColliderComponent(std::string name) : AComponent(name), 
 
 void MGE::ColliderComponent::createFixture(b2Body& body)
 {
-    body.CreateFixture(&_fixtureDef);
+    _fixture = body.CreateFixture(&_fixtureDef);
 }
 
 void MGE::ColliderComponent::setDensity(float density)

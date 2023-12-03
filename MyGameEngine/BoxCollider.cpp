@@ -43,7 +43,6 @@ void MGE::BoxCollider::setHalfSize(float x, float y)
 {
     _x = x;
     _y = y;
-    // TODO boxes instanciées au centre
     float scale = Application::getInstance()->getPhysics().WorldScale;
     _shape.SetAsBox(_x / scale, _y / scale);
 }

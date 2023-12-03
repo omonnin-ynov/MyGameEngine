@@ -63,7 +63,6 @@ void MGE::Application::initalizeWindow(int x, int y)
         delete _window;
     }
     _window = new sf::RenderWindow(sf::VideoMode(x, y), "Window created");
-    // TODO error handling
 }
 
 void MGE::Application::update(float deltaTime)

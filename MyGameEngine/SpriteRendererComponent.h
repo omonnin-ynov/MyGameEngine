@@ -2,7 +2,6 @@
 #include "AComponent.h"
 #include "ICollidable.h"
 
-// TODO sprite colors
 namespace MGE {
     class SpriteRendererComponent :
         public AComponent, public sf::Drawable, public ICollidable

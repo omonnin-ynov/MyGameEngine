@@ -1,15 +1,15 @@
 #pragma once
+#include "IDamageable.h"
 #include "MyGameEngine/AEntity.h"
 
 namespace ILM
 {
     class Enemy :
-        public MGE::AEntity
+        public MGE::AEntity,
+        public IDamageable
     {
     protected:
         float _speed;
-        float _hp;
-        float _damage;
         AEntity* _target;
 
     public:
@@ -21,10 +21,9 @@ namespace ILM
 
         float getSpeed() const;
         void setSpeed(float speed);
-        float getHp() const;
-        void removeHP(float hp);
-        void setHp(float hp);
         AEntity* getTarget() const;
         void setTarget(AEntity* target);
+        // from IDamageable
+        float takeDamage(MGE::AEntity* parent, float damage) override;
     };
 }

@@ -1,17 +1,17 @@
 #pragma once
+#include "IDamageable.h"
 #include "MyGameEngine/AEntity.h"
 
 namespace ILM
 {
     class Projectile :
-        public MGE::AEntity
+        public MGE::AEntity,
+		public IDamageable
     {
     protected:
         float _speed;
-        float _damage;
         float _areaMod;
         float _duration;
-        int _hp;
         // Self-destruct timer, used as spawn timer if projectile registered in TimedProjectileSpawner
         sf::Clock timer;
 
@@ -22,13 +22,11 @@ namespace ILM
 
         void Update(float deltaTime) override;
 
-        float getDamage() const;
-        void setDamage(float damage);
         float getSpeed() const;
         void setSpeed(float speed);
-        float getBaseSpawnRate() const;
-        void setBaseSpawnRate(float baseSpawnRate);
         float getElapsedTime();
         void resetTimer();
+        // from IDamageable
+        float takeDamage(MGE::AEntity* parent, float damage) override;
     };
 }
