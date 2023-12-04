@@ -2,7 +2,6 @@
 #include <MyGameEngine/Application.h>
 #include <MyGameEngine/ResourceManager.h>
 #include <MyGameEngine/AEntity.h>
-#include <MyGameEngine/RigidBodyComponent.h>
 #include <MyGameEngine/CameraComponent.h>
 #include "GameManager.h"
 #include "LuaProjectileMovement.h"

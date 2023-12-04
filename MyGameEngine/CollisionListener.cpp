@@ -21,7 +21,7 @@ void MGE::CollisionListener::BeginContact(b2Contact* contact)
         rigidBodyA = app->getb2BodyToComp()->at(bodyA);
         rigidBodyB = app->getb2BodyToComp()->at(bodyB);
     }
-    catch (std::out_of_range& e) {
+    catch (std::out_of_range& ) {
         return;
     }
     AEntity* parentA = app->getParentEntity(rigidBodyA);
@@ -75,7 +75,7 @@ void MGE::CollisionListener::EndContact(b2Contact* contact)
     {
         rigidBodyA = app->getb2BodyToComp()->at(bodyA);
         rigidBodyB = app->getb2BodyToComp()->at(bodyB);
-    } catch (std::out_of_range& e) {
+    } catch (std::out_of_range& ) {
         return;
     }
     AEntity* parentA = app->getParentEntity(rigidBodyA);

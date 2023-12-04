@@ -155,7 +155,7 @@ void ILM::TimedProjectileSpawner::clearProjectiles()
 
 void ILM::TimedProjectileSpawner::removeProjectile(std::string projectileName)
 {
-    int removed = _projectiles.erase(projectileName);
+    size_t removed = _projectiles.erase(projectileName);
     if (!removed)
     {
         std::cout << "warning: attempt to remove nonexistent projectile from projectile spawner\n";
