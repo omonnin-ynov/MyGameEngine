@@ -27,7 +27,7 @@ Features I'd like to add:
 
 - Components can have children components
 - ECS paradigm with memory accesses optimized for locality
-- Sprite center matches up with b2Body center (I attempted to do it, but the game refused to render when I did so)
+- Sprite center matches up with b2Body center
 - Better input integration
 - GUI Components
 - Sound
